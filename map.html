@@ -63,12 +63,12 @@
 
       markerLocation();
 
-      MarkerLocation2();
+      markerLocation2();
 
     
       marker.on('dragend', markerLocation);
 
-      marker2.on('dragend', MarkerLocation2);
+      marker2.on('dragend', markerLocation2);
 
       
 
@@ -77,8 +77,8 @@
           coordinates.innerHTML = 'POINT A <br>Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
       }
 
-      function MarkerLocation2() {
-          var l = marker.getLatLng();
+      function markerLocation2() {
+          var l = marker2.getLatLng();
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
       }
       
