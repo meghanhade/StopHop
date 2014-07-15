@@ -12,7 +12,7 @@
   <body>
 
     <style>
-      pre.ui-coordinates {
+      pre.pointA-coordinates {
         position:absolute;
         bottom:20px;
         left:30px;
@@ -23,7 +23,7 @@
         line-height:18px;
         border-radius:3px;
         }
-      pre.ui-coordinates2 {
+      pre.pointB-coordinates2 {
         position:absolute;
         bottom:20px;
         left:300px;
@@ -36,8 +36,8 @@
         }
     </style>
     <div id='map'></div>
-    <pre id='coordinates' class='ui-coordinates'></pre>
-    <pre id='coordinates2' class='ui-coordinates2'></pre>
+    <pre id='coordinates' class='pointA-coordinates'></pre>
+    <pre id='coordinates2' class='pointB-coordinates2'></pre>
     
     <script type='text/javascript'>
       
@@ -47,14 +47,14 @@
         sanitizer: function(x) { console.log(x); return x; }
         }
         })
-        .setView([37.7833, -122.4167], 13);
+        .setView([45.52282, -122.6766], 13);
         
-      var marker = L.marker(new L.LatLng(37.7833, -122.4167), {
+      var marker = L.marker(new L.LatLng(45.52282, -122.6766), {
         icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
         }).addTo(map);
 
-      var marker2 = L.marker(new L.LatLng(37.7833, -122.4530), {
+      var marker2 = L.marker(new L.LatLng(45.52282, -122.69), {
         icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
         }).addTo(map);
@@ -75,17 +75,14 @@
       function markerLocation() {
           var m = marker.getLatLng();
           coordinates.innerHTML = 'POINT A <br>Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
-      }
+      };
 
       function markerLocation2() {
           var l = marker2.getLatLng();
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
-      }
+      };
       
-     
-
-    
-
+      
 
 
     </script>
