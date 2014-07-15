@@ -26,7 +26,7 @@
       pre.ui-coordinates2 {
         position:absolute;
         bottom:20px;
-        left:60px;
+        left:300px;
         padding:5px 10px;
         background:rgba(0,0,0,0.5);
         color:#fff;
@@ -63,10 +63,12 @@
 
       markerLocation();
 
+      MarkerLocation2();
+
     
       marker.on('dragend', markerLocation);
 
-      newMarker.on('dragend', newMarkerLocation);
+      marker2.on('dragend', MarkerLocation2);
 
       
 
@@ -75,7 +77,7 @@
           coordinates.innerHTML = 'POINT A <br>Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
       }
 
-      function newMarkerLocation() {
+      function MarkerLocation2() {
           var l = marker.getLatLng();
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
       }
