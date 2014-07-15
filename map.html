@@ -43,11 +43,11 @@
         }).addTo(map);
         
     
-      marker.on('dragend', ondragend);
+      marker.on('dragend', markerLocation);
 
-      ondragend();
+      markerLocation();
 
-      function ondragend() {
+      function markerLocation() {
           var m = marker.getLatLng();
           coordinates.innerHTML = 'Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
       }
