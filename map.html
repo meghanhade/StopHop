@@ -23,9 +23,22 @@
         line-height:18px;
         border-radius:3px;
         }
+
+      pre.ui-coordinates2 {
+        position:absolute;
+        bottom:20px;
+        left:70px;
+        padding:5px 10px;
+        background:rgba(0,0,0,0.5);
+        color:#fff;
+        font-size:13px;
+        line-height:18px;
+        border-radius:3px;
+        }
     </style>
     <div id='map'></div>
     <pre id='coordinates' class='ui-coordinates'></pre>
+    <pre id='coordinates2' class='ui-coordinates2'></pre>
     
     <script type='text/javascript'>
       
@@ -42,19 +55,31 @@
         draggable: true
         }).addTo(map);
         
+      map.on('click', addMarker);
+
+      function addMarker(e) {
+        var newMarker = new L.marker(e.latlng, {icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}), draggable: true}).addTo(map);
+      };
+
+      markerLocation();
     
       marker.on('dragend', markerLocation);
 
-      markerLocation();
+      newMarker.on('dragend', newMarkerLocation);
+
+      
 
       function markerLocation() {
           var m = marker.getLatLng();
-          coordinates.innerHTML = 'Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
+          coordinates.innerHTML = 'POINT A <br>Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
+      }
+
+      function newMarkerLocation() {
+          var l = marker.getLatLng();
+          coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
       }
       
-      updateMarker();
-
-      marker.on('dragend',updateMarker);
+     
 
     
 
