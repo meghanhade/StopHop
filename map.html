@@ -10,7 +10,22 @@
   </head>
   
   <body>
+
+    <style>
+      pre.ui-coordinates {
+        position:absolute;
+        bottom:20px;
+        left:30px;
+        padding:5px 10px;
+        background:rgba(0,0,0,0.5);
+        color:#fff;
+        font-size:13px;
+        line-height:18px;
+        border-radius:3px;
+        }
+    </style>
     <div id='map'></div>
+    <pre id='coordinates' class='ui-coordinates'></pre>
     
     <script type='text/javascript'>
       
@@ -25,15 +40,26 @@
       var marker = L.marker(new L.LatLng(37.7833, -122.4167), {
         icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
-        });
+        }).addTo(map);
         
-      function updateMarker() {
-        marker.addTo(map);
+      // every time the marker is dragged, update the coordinates container
+      marker.on('dragend', ondragend);
+
+      // Set the initial marker coordinate on load.
+      ondragend();
+
+      function ondragend() {
+          var m = marker.getLatLng();
+          coordinates.innerHTML = 'Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
       }
       
       updateMarker();
-      
+
       marker.on('dragend',updateMarker);
+
+    
+
+
 
     </script>
   </body>
