@@ -42,10 +42,9 @@
         draggable: true
         }).addTo(map);
         
-      // every time the marker is dragged, update the coordinates container
+    
       marker.on('dragend', ondragend);
 
-      // Set the initial marker coordinate on load.
       ondragend();
 
       function ondragend() {
