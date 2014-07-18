@@ -10,20 +10,24 @@
 <p id="someElement"></p>
 <p id="anotherElement"></p>
  
+<h1>"MARKDOWN FOR WHAT?"</h1>
+
 <script>
-var xml = "<rss version='2.0'><channel><title>RSS Title</title></channel></rss>",
+
+
+var xml = "http://localhost:8080/otp/routers/default/plan?fromPlace=45.52282%2C-122.6766&toPlace=45.52282%2C-122.69&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false",
   xmlDoc = $.parseXML( xml ),
   $xml = $( xmlDoc ),
-  $title = $xml.find( "title" );
+  $plan = $xml.find( "plan" );
  
 // Append "RSS Title" to #someElement
-$( "#someElement" ).append( $title.text() );
+$( "#someElement" ).append( $plan.text() );
  
 // Change the title to "XML Title"
-$title.text( "XML Title" );
+$plan.text( "XML Plan" );
  
 // Append "XML Title" to #anotherElement
-$( "#anotherElement" ).append( $title.text() );
+$( "#anotherElement" ).append( $plan.text() );
 </script>
  
 </body>
