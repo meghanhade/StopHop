@@ -93,52 +93,59 @@
       marker2.on('dragend', markerLocation2); 
 
       function markerLocation() {
-          var m = marker.getLatLng();
-          coordinates.innerHTML = 'POINT A <br>Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
+          var pointA = marker.getLatLng();
+          coordinates.innerHTML = 'POINT A <br>Latitude: ' + pointA.lat + '<br />Longitude: ' + pointA.lng;
+          // console.log("lat: "+m.lat+" and lon: "+m.lng)
+          // console.log("http:localhost:8080/otp/routers/default/plan?fromPlace="+m.lat+"%2C"+m.lng+"&toPlace=")
       };
 
       function markerLocation2() {
-          var l = marker2.getLatLng();
-          coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
+          var pointB = marker2.getLatLng();
+          coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
+          // console.log(l.lat, l.lng)
       };
+      // };
 
       function generate_url () {
-        var point_a = marker.getLatLng();
-        var point_b = marker2.getLatLng();
+        var pointA = marker.getLatLng();
+        var pointB = marker2.getLatLng();
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
+        console.log(url)
+      };
+      // //   //takes coordinates, formulates url
 
-        url = "http://localhost:8080/otp/routers/default/plan?fromPlace="+point_a+"&toPlace="+point_b+"&time=3%3A20pm&date=07-18-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
-      //   //takes coordinates, formulates url
+      generate_url ();
 
 
-      //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
+      // //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
+
+      // // 
+
+      // function get_routes () {
+      //   var url = generate_url();
+      //   // put ajax request formulation here, using jquery
+      //   // send ajax request to 8080, using full url for OTP
+      
+      //   $.get(url, map_route(path_data))
+      // }
+      
+      // $(document).ready(function () {
+      //   $(".ui-button").click(function (path_data){
+
+      //     get_routes(path_data)
+      //     alert( "Load was performed." )
+      //     console.log("Success")
+      //     console.log(path_data)
+
+      //   });
+
+      // // function map_route (path_data) {
+      // //   // js function that uses path_data json to render route polyline
+
+
+      // // }
 
       // }
-
-      function get_routes () {
-        var url = generate_url();
-        // put ajax request formulation here, using jquery
-        // send ajax request to 8080, using full url for OTP
-      
-        $.get(url, map_route(path_data))
-      }
-      
-      $(document).ready(function () {
-        $(".ui-button").click(function (path_data){
-
-          get_routes(path_data)
-          alert( "Load was performed." )
-          console.log("Success")
-          console.log(path_data)
-
-        });
-
-      // function map_route (path_data) {
-      //   // js function that uses path_data json to render route polyline
-
-
-      // }
-
-      }
 
 
     </script>
