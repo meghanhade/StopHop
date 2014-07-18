@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http:////ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Web Page</h1>
+
+<p id="demo">A Paragraph.</p>
+
+<button id="javascriptButton" type="button" onclick="myFunction()">Try it javascript</button>
+<p/>
+<button id="jqueryButton" type="button">Try it jquery</button>
+
+<script>
+function myFunction() {
+    document.getElementById("demo").innerHTML = "Paragraph changed from javascript click.";
+}
+
+$(document).ready(function(){
+    $("#jqueryButton").click(function() {
+        $("#demo").html("Paragraph changed from jquery");

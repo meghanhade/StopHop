@@ -1,8 +1,9 @@
-<html>
+<!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
 <title>Multi-Stop Transit Routing</title>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.css' rel='stylesheet' />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.js'></script>
     <style>
       #map { position:absolute; top:0; bottom:0; left:0; width:100%; }
@@ -63,6 +64,8 @@
 
     
     <script type='text/javascript'>
+
+
       
       var map = L.mapbox.map('map', 'meghan.ipb4b059', {
         gridLayer: {},
@@ -103,51 +106,64 @@
           var pointB = marker2.getLatLng();
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
           // console.log(l.lat, l.lng)
-      };
-      // };
+      };      // };
 
       function generate_url () {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
         url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
-        console.log(url)
+        return url
       };
-      // //   //takes coordinates, formulates url
-
-      generate_url ();
-
-
+      </script>
+      
+     <!--  // //   //takes coordinates, formulates url
+      
       // //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
+      // //  -->
 
-      // // 
+      <a href="http://jquery.com/">jQuery</a>
+      <script src="jquery-1.11.1.min.js"></script>
+      <script>
+        // $( document ).ready(function() {
+        // $( "a" ).click(function( event ) {
+        //   alert( "Find a route!" );
+        //   });
+        // });
 
-      // function get_routes () {
-      //   var url = generate_url();
-      //   // put ajax request formulation here, using jquery
-      //   // send ajax request to 8080, using full url for OTP
+        function map_route(path_data){
+              console.log(path_data);
+            }
+
+        function get_routes () {
+          var url = generate_url();
+        // put ajax request formulation here, using jquery
+        // send ajax request to 8080, using full url for OTP
       
-      //   $.get(url, map_route(path_data))
-      // }
+          $.get(url, map_route);
+          console.log("get_route worked")
+        }
       
-      // $(document).ready(function () {
-      //   $(".ui-button").click(function (path_data){
+        get_routes();
 
-      //     get_routes(path_data)
-      //     alert( "Load was performed." )
-      //     console.log("Success")
-      //     console.log(path_data)
+        $(document).ready(function () {
+          $(".ui-button").click(get_routes)
+          });
 
-      //   });
+        </script>
+        
+
+
+
 
       // // function map_route (path_data) {
       // //   // js function that uses path_data json to render route polyline
 
 
-      // // }
+      // } 
 
       // }
-
-
-    </script>
+      
+    
+    
   </body>
 </html>
