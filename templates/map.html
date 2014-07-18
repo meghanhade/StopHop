@@ -40,7 +40,7 @@
           color:#FFF;
           display:block;
           position:absolute;
-          top:15%;left:15%;
+          top:20%;left:15%;
           width:130px;
           margin:-20px 0 0 -80px;
           z-index:100;
@@ -90,11 +90,7 @@
     
       marker.on('dragend', markerLocation);
 
-      marker2.on('dragend', markerLocation2);
-
-      //Add "submit points" button
-
-      
+      marker2.on('dragend', markerLocation2); 
 
       function markerLocation() {
           var m = marker.getLatLng();
@@ -106,32 +102,43 @@
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + l.lat + '<br />Longitude: ' + l.lng;
       };
 
+      function generate_url () {
+        var point_a = marker.getLatLng();
+        var point_b = marker2.getLatLng();
+
+        url = "http://localhost:8080/otp/routers/default/plan?fromPlace="+point_a+"&toPlace="+point_b+"&time=3%3A20pm&date=07-18-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
+      //   //takes coordinates, formulates url
+
+
+      //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
+
+      // }
+
+      function get_routes () {
+        var url = generate_url();
+        // put ajax request formulation here, using jquery
+        // send ajax request to 8080, using full url for OTP
+      
+        $.get(url, map_route(path_data))
+      }
+      
+      $(document).ready(function () {
+        $(".ui-button").click(function (path_data){
+
+          get_routes(path_data)
+          alert( "Load was performed." )
+          console.log("Success")
+          console.log(path_data)
+
+        });
+
       // function map_route (path_data) {
       //   // js function that uses path_data json to render route polyline
 
 
       // }
 
-      // function generate_url () {
-      //   //takes coordinates, formulates url
-
-      // }
-
-      // function get_routes () {
-      //   var url = generate_url();
-      //   // put ajax request formulation here
-      //   // send ajax request to 8080, using full url for OTP
-      //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
-      //   $.get(url, map_route(path_data))
-      // }
-      
-      // $(document).ready(function () {
-      //   $(submit_button\).click(get_routes());
-
-
-      //   }
-
-      // }
+      }
 
 
     </script>
