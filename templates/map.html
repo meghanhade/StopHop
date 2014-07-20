@@ -128,26 +128,45 @@
       <script>
        
 
-        function map_route(path_data){
-              console.log(path_data);
-            }
-
         function get_routes () {
           var url = generate_url();      
           $.getJSON(url, function(data) {
-            map_route(data),
-            console.log("get_routes worked")
+            console.log("get_routes worked");
             $.each(data, function(index, element) {
               $('body').append($('<div>', {
                 text: element.name
               }));
             })
+            draw_routes(data);
           })
         }
 
         $(document).ready(function () {
           $(".ui-button").click(get_routes)
           });
+
+        function draw_routes (data) {
+
+          console.log(data);
+
+          var legs = data.plan.itineraries[0].legs
+
+          for(var i=0; i < legs.length; i++) {
+            var leg = legs[i];
+            // draw the polyline
+            var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(map);
+          }
+
+          // returns an array of lat, lon pairs:
+          // var line_points = polyline.decode('_p~iF~ps|U_ulLnnqC_mqNvxq`@');
+          // console.log(line_points)
+          // console.log("line_points ran")
+          // var polyline_options = {
+          //   color: '#000'
+          //   };
+          // var polyline = L.polyline(line_points, polyline_options).addTo(map);
+
+        }
 
         </script>
         
