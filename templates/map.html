@@ -64,6 +64,8 @@
     <pre id='coordinates' class='pointA-coordinates'></pre>
     <pre id='coordinates2' class='pointB-coordinates2'></pre>
 
+
+
     
     <script type='text/javascript'>
 
@@ -76,6 +78,8 @@
         }
         })
         .setView([45.52282, -122.6766], 13);
+
+      var pathLayer = new L.LayerGroup().addTo(map);
         
       var marker = L.marker(new L.LatLng(45.52282, -122.6766), {
         icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
@@ -129,6 +133,7 @@
        
 
         function get_routes () {
+          pathLayer.clearLayers();
           var url = generate_url();      
           $.getJSON(url, function(data) {
             console.log("get_routes worked");
@@ -142,7 +147,7 @@
         }
 
         $(document).ready(function () {
-          $(".ui-button").click(get_routes)
+          $(".ui-button").click(get_routes);
           });
 
         function draw_routes (data) {
@@ -154,7 +159,7 @@
           for(var i=0; i < legs.length; i++) {
             var leg = legs[i];
             // draw the polyline
-            var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(map);
+            var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           }
 
           // returns an array of lat, lon pairs:
