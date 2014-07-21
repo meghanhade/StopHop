@@ -120,60 +120,53 @@
         url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
         return url
       };
-      </script>
       
-     <!--  // //   //takes coordinates, formulates url
-      
-      // //   // example url: http://localhost:8080/otp/routers/default/plan?fromPlace=45.520300607576864%2C-122.65514373779297&toPlace=45.50562506354086%2C-122.63557434082031&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false
-      // //  -->
-
-      
-      
-      <script>
        
 
-        function get_routes () {
-          pathLayer.clearLayers();
-          var url = generate_url();      
-          $.getJSON(url, function(data) {
-            console.log("get_routes worked");
-            $.each(data, function(index, element) {
-              $('body').append($('<div>', {
-                text: element.name
-              }));
-            })
-            draw_routes(data);
+      function get_routes () {
+        pathLayer.clearLayers();
+        var url = generate_url();      
+        $.getJSON(url, function(data) {
+          console.log("get_routes worked");
+          $.each(data, function(index, element) {
+            $('body').append($('<div>', {
+              text: element.name
+            }));
           })
+          draw_routes(data);
+        })
+      }
+
+      $(document).ready(function () {
+        $(".ui-button").click(get_routes);
+        });
+
+      function draw_routes (data) {
+
+        console.log(data);
+
+        var legs = data.plan.itineraries[0].legs
+
+        for(var i=0; i < legs.length; i++) {
+          var leg = legs[i];
+          // draw the polyline
+          var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
+          route_line.leg = leg;
+          route_line.bindPopup("("+leg.routeShortName+") "+leg.routeLongName);
         }
 
-        $(document).ready(function () {
-          $(".ui-button").click(get_routes);
-          });
+        // returns an array of lat, lon pairs:
+        // var line_points = polyline.decode('_p~iF~ps|U_ulLnnqC_mqNvxq`@');
+        // console.log(line_points)
+        // console.log("line_points ran")
+        // var polyline_options = {
+        //   color: '#000'
+        //   };
+        // var polyline = L.polyline(line_points, polyline_options).addTo(map);
 
-        function draw_routes (data) {
+      }
 
-          console.log(data);
-
-          var legs = data.plan.itineraries[0].legs
-
-          for(var i=0; i < legs.length; i++) {
-            var leg = legs[i];
-            // draw the polyline
-            var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
-          }
-
-          // returns an array of lat, lon pairs:
-          // var line_points = polyline.decode('_p~iF~ps|U_ulLnnqC_mqNvxq`@');
-          // console.log(line_points)
-          // console.log("line_points ran")
-          // var polyline_options = {
-          //   color: '#000'
-          //   };
-          // var polyline = L.polyline(line_points, polyline_options).addTo(map);
-
-        }
-
-        </script>
+      </script>
         
 
 
