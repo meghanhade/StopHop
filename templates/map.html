@@ -58,6 +58,7 @@
         bottom:250px;
         left:30px;
         width:130px;
+        height: 20px;
         z-index:100;
         text-align:center;
         padding:10px;
@@ -142,15 +143,41 @@
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
         url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
-        console.log(url)
+        console.log("url1: ", url)
         return url
       };
+
+      function generate_url_2 () {
+        var pointB = marker2.getLatLng();
+        var pointC = marker3.getLatLng();
+        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
+        console.log("url2: ", url2)
+        return url2
+      };
+
+
       
       function get_routes () {
-        pathLayer.clearLayers();
+        // pathLayer.clearLayers();
+        // process input fields
         var url = generate_url();      
         $.getJSON(url, function(data) {
           console.log("get_routes worked");
+          $.each(data, function(index, element) {
+            $('body').append($('<div>', {
+              text: element.name
+            }));
+          })
+          draw_routes(data);
+        })
+      }
+
+      function get_routes_2 () {
+        pathLayer.clearLayers();
+        // process input fields
+        var url2 = generate_url_2();      
+        $.getJSON(url2, function(data) {
+          console.log("get_routes_2 worked");
           $.each(data, function(index, element) {
             $('body').append($('<div>', {
               text: element.name
