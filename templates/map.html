@@ -38,31 +38,44 @@
         border-radius:3px;
         }
 
-        .ui-button {
-          background:#3887BE;
-          color:#FFF;
-          display:block;
-          position:absolute;
-          top:20%;left:15%;
-          width:130px;
-          margin:-20px 0 0 -80px;
-          z-index:100;
-          text-align:center;
-          padding:10px;
-          border:0px solid rgba(0,0,0,0.4);
-          border-radius:3px;
-          }
-        
-        .ui-button:hover {
-          background:#3074a4;
-          color:#fff;
-          }
+      pre.pointC-coordinates3 {
+        position:absolute;
+        bottom:20px;
+        left:600px;
+        padding:5px 10px;
+        background:rgba(0,0,0,0.5);
+        color:#fff;
+        font-size:13px;
+        line-height:18px;
+        border-radius:3px;
+        }
+
+      .ui-button {
+        background:#3887BE;
+        color:#FFF;
+        display:block;
+        position:absolute;
+        top:20%;left:15%;
+        width:130px;
+        margin:-20px 0 0 -80px;
+        z-index:100;
+        text-align:center;
+        padding:10px;
+        border:0px solid rgba(0,0,0,0.4);
+        border-radius:3px;
+        }
+      
+      .ui-button:hover {
+        background:#3074a4;
+        color:#fff;
+        }
     </style>
 
     <div id='map'></div>
     <a class='ui-button'>Find route</a>
     <pre id='coordinates' class='pointA-coordinates'></pre>
     <pre id='coordinates2' class='pointB-coordinates2'></pre>
+    <pre id='coordinates3' class='pointC-coordinates3'></pre>
 
 
 
@@ -91,38 +104,48 @@
         draggable: true
         }).addTo(map);
 
+      var marker3 = L.marker(new L.LatLng(45.515609, -122.682437), {
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+        draggable: true
+        }).addTo(map);
+
     
       markerLocation();
 
       markerLocation2();
+
+      markerLocation3();
 
     
       marker.on('dragend', markerLocation);
 
       marker2.on('dragend', markerLocation2); 
 
+      marker3.on('dragend', markerLocation3); 
+
       function markerLocation() {
           var pointA = marker.getLatLng();
           coordinates.innerHTML = 'POINT A <br>Latitude: ' + pointA.lat + '<br />Longitude: ' + pointA.lng;
-          // console.log("lat: "+m.lat+" and lon: "+m.lng)
-          // console.log("http:localhost:8080/otp/routers/default/plan?fromPlace="+m.lat+"%2C"+m.lng+"&toPlace=")
       };
 
       function markerLocation2() {
           var pointB = marker2.getLatLng();
           coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
-          // console.log(l.lat, l.lng)
-      };      // };
+      };  
+
+      function markerLocation3() {
+          var pointC = marker3.getLatLng();
+          coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
+      };      
 
       function generate_url () {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
-        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&time=3%3A20pm&date=07-16-2014&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&showIntermediateStops=false"
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
+        console.log(url)
         return url
       };
       
-       
-
       function get_routes () {
         pathLayer.clearLayers();
         var url = generate_url();      
@@ -143,8 +166,6 @@
 
       function draw_routes (data) {
 
-        console.log(data);
-
         var legs = data.plan.itineraries[0].legs
 
         for(var i=0; i < legs.length; i++) {
@@ -154,33 +175,9 @@
           route_line.leg = leg;
           route_line.bindPopup("("+leg.routeShortName+") "+leg.routeLongName);
         }
-
-        // returns an array of lat, lon pairs:
-        // var line_points = polyline.decode('_p~iF~ps|U_ulLnnqC_mqNvxq`@');
-        // console.log(line_points)
-        // console.log("line_points ran")
-        // var polyline_options = {
-        //   color: '#000'
-        //   };
-        // var polyline = L.polyline(line_points, polyline_options).addTo(map);
-
+        map.fitBounds(route_line.getBounds());
       }
 
       </script>
-        
-
-
-
-
-      // // function map_route (path_data) {
-      // //   // js function that uses path_data json to render route polyline
-
-
-      // } 
-
-      // }
-      
-    
-    
   </body>
 </html>
