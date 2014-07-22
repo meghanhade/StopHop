@@ -157,10 +157,40 @@
 
 
       
-      function get_routes () {
-        // pathLayer.clearLayers();
-        // process input fields
-        var url = generate_url();      
+      // function get_routes () {
+      //   pathLayer.clearLayers();
+      //   // process input fields
+      //   var url = generate_url();      
+      //   $.getJSON(url, function(data) {
+      //     console.log("get_routes worked");
+      //     $.each(data, function(index, element) {
+      //       $('body').append($('<div>', {
+      //         text: element.name
+      //       }));
+      //     })
+      //     draw_routes(data);
+      //   })
+      // }
+
+      // function get_routes_2 () {
+      //   pathLayer.clearLayers();
+      //   // process input fields
+      //   var url2 = generate_url_2();      
+      //   $.getJSON(url2, function(data) {
+      //     console.log("get_routes_2 worked");
+      //     $.each(data, function(index, element) {
+      //       $('body').append($('<div>', {
+      //         text: element.name
+      //       }));
+      //     })
+      //     draw_routes(data);
+      //   })
+      // }
+
+      function get_routes_all () {
+        pathLayer.clearLayers();
+        var url = generate_url();
+        var url2 = generate_url_2();       
         $.getJSON(url, function(data) {
           console.log("get_routes worked");
           $.each(data, function(index, element) {
@@ -169,26 +199,20 @@
             }));
           })
           draw_routes(data);
-        })
-      }
-
-      function get_routes_2 () {
-        pathLayer.clearLayers();
-        // process input fields
-        var url2 = generate_url_2();      
-        $.getJSON(url2, function(data) {
+          })
+        $.getJSON(url2, function(data2) {
           console.log("get_routes_2 worked");
-          $.each(data, function(index, element) {
+          $.each(data2, function(index, element) {
             $('body').append($('<div>', {
               text: element.name
             }));
           })
-          draw_routes(data);
+          draw_routes(data2);
         })
       }
 
       $(document).ready(function () {
-        $(".ui-button").click(get_routes);
+        $(".ui-button").click(get_routes_all);
         });
 
       function draw_routes (data) {
