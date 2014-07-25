@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
-<title>Multi-Stop Transit Routing</title>
+    <title>Multi-Stop Transit Routing</title>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.css' rel='stylesheet' />
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
     <script src="jquery-1.11.1.min.js"></script>
@@ -50,7 +50,7 @@
         border-radius:3px;
         }
 
-      .ui-button {
+      .ui-button_route {
         background:#3887BE;
         color:#FFF;
         display:block;
@@ -66,14 +66,36 @@
         border-radius:3px;
         }
       
-      .ui-button:hover {
+      .ui-button_route:hover {
+        background:#3074a4;
+        color:#fff;
+        }
+
+      .ui-button_marker {
+        background:#3887BE;
+        color:#FFF;
+        display:block;
+        position:absolute;
+        bottom:300px;
+        left:30px;
+        width:130px;
+        height: 20px;
+        z-index:100;
+        text-align:center;
+        padding:10px;
+        border:0px solid rgba(0,0,0,0.4);
+        border-radius:3px;
+        }
+      
+      .ui-button_marker:hover {
         background:#3074a4;
         color:#fff;
         }
     </style>
 
     <div id='map'></div>
-    <a class='ui-button'>Find route</a>
+    <a class='ui-button_marker'>Add marker</a>
+    <a class='ui-button_route'>Find route</a>
     <pre id='coordinates' class='pointA-coordinates'></pre>
     <pre id='coordinates2' class='pointB-coordinates2'></pre>
     <pre id='coordinates3' class='pointC-coordinates3'></pre>
@@ -110,6 +132,13 @@
         draggable: true
         }).addTo(map);
 
+      // function addMarker() {
+      //   var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+      //   icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+      //   draggable: true
+      //   }).addTo(map);
+      //   };
+
     
       markerLocation();
 
@@ -123,6 +152,8 @@
       marker2.on('dragend', markerLocation2); 
 
       marker3.on('dragend', markerLocation3); 
+
+      
 
       function markerLocation() {
           var pointA = marker.getLatLng();
@@ -139,6 +170,8 @@
           coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
       };      
 
+
+
       function generate_url () {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
@@ -154,38 +187,6 @@
         console.log("url2: ", url2)
         return url2
       };
-
-
-      
-      // function get_routes () {
-      //   pathLayer.clearLayers();
-      //   // process input fields
-      //   var url = generate_url();      
-      //   $.getJSON(url, function(data) {
-      //     console.log("get_routes worked");
-      //     $.each(data, function(index, element) {
-      //       $('body').append($('<div>', {
-      //         text: element.name
-      //       }));
-      //     })
-      //     draw_routes(data);
-      //   })
-      // }
-
-      // function get_routes_2 () {
-      //   pathLayer.clearLayers();
-      //   // process input fields
-      //   var url2 = generate_url_2();      
-      //   $.getJSON(url2, function(data) {
-      //     console.log("get_routes_2 worked");
-      //     $.each(data, function(index, element) {
-      //       $('body').append($('<div>', {
-      //         text: element.name
-      //       }));
-      //     })
-      //     draw_routes(data);
-      //   })
-      // }
 
       function get_routes_all () {
         pathLayer.clearLayers();
@@ -212,7 +213,12 @@
       }
 
       $(document).ready(function () {
-        $(".ui-button").click(get_routes_all);
+        $(".ui-button_route").click(get_routes_all);
+        $(".ui-button_marker").click(addMarker);
+        });
+
+      $(document).ready(function () {
+        $(".ui-button_marker").click(addMarker);
         });
 
       function draw_routes (data) {
