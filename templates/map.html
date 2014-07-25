@@ -9,11 +9,28 @@
     <script src='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.js'></script>
     <style>
       #map { position:absolute; top:0; bottom:0; left:0; width:100%; }
+      #dateTime {
+        /*background:#3887BE;
+        color:#FFF;*/
+        display:block;
+        position:absolute;
+        bottom:350px;
+        left:30px;
+        width:180px;
+        height: 20px;
+        z-index:100;
+        font-family: sans-serif;
+        font-size: 16px;
+        /*text-align:center;*/
+        padding:5px;
+        border:0px solid rgba(0,0,0,0.4);
+        border-radius:3px;
+      }
     </style>
   </head>
   
   <body>
-
+    
     <style>
       pre.pointA-coordinates {
         position:absolute;
@@ -93,12 +110,14 @@
         }
     </style>
 
+    <input id='dateTime' type=datetime-local>
     <div id='map'></div>
     <a class='ui-button_marker'>Add marker</a>
     <a class='ui-button_route'>Find route</a>
     <pre id='coordinates' class='pointA-coordinates'></pre>
     <pre id='coordinates2' class='pointB-coordinates2'></pre>
     <pre id='coordinates3' class='pointC-coordinates3'></pre>
+
 
 
 
