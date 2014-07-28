@@ -129,7 +129,7 @@
       var map = L.mapbox.map('map', 'meghan.ipb4b059', {
         gridLayer: {},
         gridControl: {
-        sanitizer: function(x) { console.log(x); return x; }
+        sanitizer: function (x) { console.log(x); return x; }
         }
         })
         .setView([45.52282, -122.6766], 13);
@@ -191,7 +191,7 @@
 
 
 
-      function generate_url () {
+      function generate_url() {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
         url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
@@ -219,7 +219,7 @@
             }));
           })
           draw_routes(data);
-          })
+        })
         $.getJSON(url2, function(data2) {
           console.log("get_routes_2 worked");
           $.each(data2, function(index, element) {
@@ -234,11 +234,11 @@
       $(document).ready(function () {
         $(".ui-button_route").click(get_routes_all);
         $(".ui-button_marker").click(addMarker);
-        });
+      });
 
       $(document).ready(function () {
         $(".ui-button_marker").click(addMarker);
-        });
+      });
 
       function draw_routes (data) {
 
@@ -251,7 +251,7 @@
           route_line.leg = leg;
           route_line.bindPopup("("+leg.routeShortName+") "+leg.routeLongName);
         }
-        map.fitBounds(route_line.getBounds());
+        // map.fitBounds(route_line.getBounds());
       }
 
       </script>
