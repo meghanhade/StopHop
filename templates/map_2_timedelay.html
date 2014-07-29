@@ -1,3 +1,5 @@
+current
+
 <!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
@@ -12,37 +14,33 @@
       #minuteDelay {
         display:block;
         position:absolute;
-        bottom:385px;
+        bottom:350px;
         left:30px;
         width:180px;
-        /*height: 20px;*/
         z-index:100;
         font-family: sans-serif;
         font-size: 16px;
-        /*text-align:center;*/
         padding:5px;
         border:0px solid rgba(0,0,0,0.4);
         border-radius:3px;
         background: white;
       }
       #dateTime {
-        /*background:#3887BE;
-        color:#FFF;*/
+        background:white;
+        color:black;
         display:block;
         position:absolute;
-        bottom:350px;
+        bottom:405px;
         left:30px;
-        /*width:180px;*/
-        height: 20px;
+        height: 40px;
         z-index:100;
         font-family: sans-serif;
         font-size: 16px;
-        /*text-align:center;*/
         padding:5px;
         border:0px solid rgba(0,0,0,0.4);
         border-radius:3px;
       }
-      }
+      
     </style>
   </head>
   
@@ -127,7 +125,11 @@
         }
     </style>
 
-    <input id='dateTime' type=datetime-local>
+    <!-- <input id='dateTime' type=datetime-local> -->
+   
+    <form id='dateTime'>
+      Trip start day and time: <br><input type=datetime-local>
+    </form>
     <div id='map'></div>
     <a class='ui-button_marker'>Add marker</a>
     <a class='ui-button_route'>Find route</a>
@@ -136,9 +138,8 @@
     <pre id='coordinates3' class='pointC-coordinates3'></pre>
 
 
-    <form id='minuteDelay' action="demo_form.asp">
+    <form id='minuteDelay'>
       Time needed at stop #2: <input type="number" name="quantity" placeholder="Minutes" min="0">
-      <input type="submit">
     </form>
 
     
@@ -209,42 +210,6 @@
           coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
       };      
 
-      function generate_url() {
-        var pointA = marker.getLatLng();
-        var pointB = marker2.getLatLng();
-        var inputTime = $("input#dateTime").val();
-        // console.log(inputTime);
-        var d = new Date(inputTime);
-        // var d = new Date;
-        var y = d.getFullYear();
-        //add one to month, as January is month 0:
-        var m = d.getMonth()+1;
-        var day = d.getDate();
-        var n = d.getTime();
-
-        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
-        return url
-      };
-
-      function generate_url_2 (arrivalTime) {
-        var pointB = marker2.getLatLng();
-        var pointC = marker3.getLatLng();
-        // var inputTime = $("input#dateTime").val();
-        var inputTime = arrivalTime;
-        var d = new Date(inputTime);
-        var y = d.getFullYear();
-        var m = d.getMonth()+1;
-        var day = d.getDate();
-        var n = d.getTime();
-
-        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
-        console.log("url2 input time: ", inputTime);
-        console.log("url2 date: ", d);
-        console.log("url2 time: ", n);
-        // console.log(url2)
-        return url2
-      };
-
       function get_route_1 () {
         pathLayer.clearLayers();
         var url = generate_url();       
@@ -276,14 +241,57 @@
         })
       }
 
-      $(document).ready(function () {
-        $(".ui-button_route").click(get_route_1);
-        $(".ui-button_marker").click(addMarker);
-      });
+      function generate_url() {
+        var pointA = marker.getLatLng();
+        var pointB = marker2.getLatLng();
+        var inputTime = $("input#dateTime").val();
+        // console.log(inputTime);
+        var d = new Date(inputTime);
+        // var d = new Date;
+        var y = d.getFullYear();
+        //add one to month, as January is month 0:
+        var m = d.getMonth()+1;
+        var day = d.getDate();
+        var n = d.getTime();
+
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+        console.log(url)
+        return url
+      };
+
+      function generate_url_2 (arrivalTime) {
+        var pointB = marker2.getLatLng();
+        var pointC = marker3.getLatLng();
+        // var inputTime = $("input#dateTime").val();
+        var inputTime = arrivalTime;
+        var d = new Date(inputTime);
+        var y = d.getFullYear();
+        var m = d.getMonth()+1;
+        var day = d.getDate();
+        var n = d.getTime();
+
+        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+        console.log("url2 input time: ", inputTime);
+        console.log("url2 date: ", d);
+        console.log("url2 time: ", n);
+        console.log(url2)
+        return url2
+      };
+
+      function timeDelay () {
+
+        console.log("timeDelay is working onClick")
+      }
 
       $(document).ready(function () {
-        $(".ui-button_marker").click(addMarker);
+        $(".ui-button_route").click(get_route_1);
+        $(".ui-button_route").click(timeDelay);
+        // $(".ui-button_marker").click(addMarker);
       });
+
+      // $(document).ready(function () {
+      //   $(".ui-button_marker").click(addMarker);
+      // });
 
       function draw_route_1 (data) {
 
