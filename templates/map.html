@@ -16,7 +16,7 @@
         position:absolute;
         bottom:350px;
         left:30px;
-        width:180px;
+        /*width:180px;*/
         height: 20px;
         z-index:100;
         font-family: sans-serif;
@@ -192,30 +192,41 @@
       function generate_url() {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
-        var inputTime = $("input#dateTime").val()
+        var inputTime = $("input#dateTime").val();
+        // console.log(inputTime);
         var d = new Date(inputTime);
         // var d = new Date;
         var y = d.getFullYear();
-        var m = d.getMonth();
-        var day = d.getDay();
+        //add one to month, as January is month 0:
+        var m = d.getMonth()+1;
+        var day = d.getDate();
         var n = d.getTime();
 
         url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
-        console.log("url1: ", url)
-        console.log("Time: ", n)
-        console.log("Date: ", d)
-        console.log("Year: ", y)
-        console.log("Month: ", m)
-        console.log("Day: ", day)
-        console.log("Trip start time: ",inputTime)
-        console.log(y, m, day);
+        // console.log("url1: ", url)
+        // console.log("Time: ", n)
+        // console.log("Date: ", d)
+        // console.log("Year: ", y)
+        // console.log("Month: ", m)
+        // console.log("Day: ", day)
+        // console.log("Trip start time: ",inputTime)
+        // console.log(y, m, day);
         return url
       };
 
       function generate_url_2 () {
         var pointB = marker2.getLatLng();
         var pointC = marker3.getLatLng();
-        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
+        var inputTime = $("input#dateTime").val();
+        var d = new Date(inputTime);
+        var y = d.getFullYear();
+        var m = d.getMonth()+1;
+        var day = d.getDate();
+        var n = d.getTime();
+
+        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+
+        // url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false"
         console.log("url2: ", url2)
         return url2
       };
