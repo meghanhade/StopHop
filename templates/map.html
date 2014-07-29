@@ -192,23 +192,23 @@
       function generate_url() {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
-        var d = new Date;
+        var inputTime = $("input#dateTime").val()
+        var d = new Date(inputTime);
+        // var d = new Date;
         var y = d.getFullYear();
         var m = d.getMonth();
         var day = d.getDay();
         var n = d.getTime();
 
-        //here I try using a format OTP uses:
-        // url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date=2013/10/01 &time=12:00:00"
-        //here I try using getTime:
-        // url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&time="+n
-        //here I try using getTime with a hard-coded date:
-        // url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date=2014-10-01&time="+n
-        //here I try using vars for year & time:
-        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+2014+"-"+10+"-"+01+"&time="+n
-        // console.log("url1: ", url)
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+        console.log("url1: ", url)
         console.log("Time: ", n)
         console.log("Date: ", d)
+        console.log("Year: ", y)
+        console.log("Month: ", m)
+        console.log("Day: ", day)
+        console.log("Trip start time: ",inputTime)
+        console.log(y, m, day);
         return url
       };
 
@@ -263,8 +263,7 @@
           // draw the polyline
           var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           route_line.leg = leg;
-          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+" Arrive by: "+leg.endTime);
-          console.log(newDate)
+          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+" Arrive by: "+newDate);
         }
         // map.fitBounds(route_line.getBounds());
       }
