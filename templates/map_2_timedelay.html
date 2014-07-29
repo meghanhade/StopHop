@@ -12,7 +12,7 @@
       #minuteDelay {
         display:block;
         position:absolute;
-        bottom:385px;
+        bottom:350px;
         left:30px;
         width:180px;
         /*height: 20px;*/
@@ -30,7 +30,7 @@
         color:#FFF;*/
         display:block;
         position:absolute;
-        bottom:350px;
+        bottom:420px;
         left:30px;
         /*width:180px;*/
         height: 20px;
@@ -127,7 +127,11 @@
         }
     </style>
 
-    <input id='dateTime' type=datetime-local>
+    <!-- <input id='dateTime' type=datetime-local> -->
+   
+    <form id='dateTime'>
+      Trip start day and time: <br><input type=datetime-local>
+    </form>
     <div id='map'></div>
     <a class='ui-button_marker'>Add marker</a>
     <a class='ui-button_route'>Find route</a>
@@ -138,7 +142,6 @@
 
     <form id='minuteDelay' action="demo_form.asp">
       Time needed at stop #2: <input type="number" name="quantity" placeholder="Minutes" min="0">
-      <input type="submit">
     </form>
 
     
