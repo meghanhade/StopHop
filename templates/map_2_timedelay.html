@@ -12,7 +12,7 @@
       #minuteDelay {
         display:block;
         position:absolute;
-        bottom:350px;
+        bottom:385px;
         left:30px;
         width:180px;
         /*height: 20px;*/
@@ -26,14 +26,14 @@
         background: white;
       }
       #dateTime {
-        background:white;
-        color:black;
+        /*background:#3887BE;
+        color:#FFF;*/
         display:block;
         position:absolute;
-        bottom:405px;
+        bottom:350px;
         left:30px;
         /*width:180px;*/
-        height: 40px;
+        height: 20px;
         z-index:100;
         font-family: sans-serif;
         font-size: 16px;
@@ -127,11 +127,7 @@
         }
     </style>
 
-    <!-- <input id='dateTime' type=datetime-local> -->
-   
-    <form id='dateTime'>
-      Trip start day and time: <br><input type=datetime-local>
-    </form>
+    <input id='dateTime' type=datetime-local>
     <div id='map'></div>
     <a class='ui-button_marker'>Add marker</a>
     <a class='ui-button_route'>Find route</a>
@@ -140,8 +136,9 @@
     <pre id='coordinates3' class='pointC-coordinates3'></pre>
 
 
-    <form id='minuteDelay'>
+    <form id='minuteDelay' action="demo_form.asp">
       Time needed at stop #2: <input type="number" name="quantity" placeholder="Minutes" min="0">
+      <input type="submit">
     </form>
 
     
@@ -279,14 +276,8 @@
         })
       }
 
-      function timeDelay () {
-
-        console.log("timeDelay is working onClick")
-      }
-
       $(document).ready(function () {
-        $(".ui-button_route").click(timeDelay);
-        $(".minuteDelay").click(get_route_1);
+        $(".ui-button_route").click(get_route_1);
         $(".ui-button_marker").click(addMarker);
       });
 
