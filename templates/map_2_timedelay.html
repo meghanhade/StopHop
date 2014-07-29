@@ -9,22 +9,20 @@
     <script src='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.js'></script>
     <style>
       #map { position:absolute; top:0; bottom:0; left:0; width:100%; }
-      #minuteDelay {
+      /*#minuteDelay {
         display:block;
         position:absolute;
         bottom:385px;
         left:30px;
         width:180px;
-        /*height: 20px;*/
         z-index:100;
         font-family: sans-serif;
         font-size: 16px;
-        /*text-align:center;*/
         padding:5px;
         border:0px solid rgba(0,0,0,0.4);
         border-radius:3px;
         background: white;
-      }
+      }*/
       #dateTime {
         /*background:#3887BE;
         color:#FFF;*/
@@ -157,17 +155,17 @@
       var pathLayer = new L.LayerGroup().addTo(map);
         
       var marker = L.marker(new L.LatLng(45.52282, -122.6766), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '1'}),
         draggable: true
         }).addTo(map);
 
       var marker2 = L.marker(new L.LatLng(45.52282, -122.69), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '2'}),
         draggable: true
         }).addTo(map);
 
       var marker3 = L.marker(new L.LatLng(45.515609, -122.682437), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '3'}),
         draggable: true
         }).addTo(map);
 
@@ -209,42 +207,6 @@
           coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
       };      
 
-      function generate_url() {
-        var pointA = marker.getLatLng();
-        var pointB = marker2.getLatLng();
-        var inputTime = $("input#dateTime").val();
-        // console.log(inputTime);
-        var d = new Date(inputTime);
-        // var d = new Date;
-        var y = d.getFullYear();
-        //add one to month, as January is month 0:
-        var m = d.getMonth()+1;
-        var day = d.getDate();
-        var n = d.getTime();
-
-        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
-        return url
-      };
-
-      function generate_url_2 (arrivalTime) {
-        var pointB = marker2.getLatLng();
-        var pointC = marker3.getLatLng();
-        // var inputTime = $("input#dateTime").val();
-        var inputTime = arrivalTime;
-        var d = new Date(inputTime);
-        var y = d.getFullYear();
-        var m = d.getMonth()+1;
-        var day = d.getDate();
-        var n = d.getTime();
-
-        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
-        console.log("url2 input time: ", inputTime);
-        console.log("url2 date: ", d);
-        console.log("url2 time: ", n);
-        // console.log(url2)
-        return url2
-      };
-
       function get_route_1 () {
         pathLayer.clearLayers();
         var url = generate_url();       
@@ -256,9 +218,9 @@
             }));
           });
           draw_route_1(data);
-          var arrivalTime = data.plan.itineraries[0].endTime;
-          console.log("get_route_1 arrival time: ", arrivalTime);
-          get_route_2(arrivalTime);
+          // var arrivalTime = data.plan.itineraries[0].endTime;
+          // console.log("get_route_1 arrival time: ", arrivalTime);
+          // get_route_2(arrivalTime);
         });  
       }
 
@@ -276,14 +238,59 @@
         })
       }
 
-      $(document).ready(function () {
-        $(".ui-button_route").click(get_route_1);
-        $(".ui-button_marker").click(addMarker);
-      });
+       function generate_url() {
+        var pointA = marker.getLatLng();
+        var pointB = marker2.getLatLng();
+        var inputTime = $("input#dateTime").val();
+        // console.log(inputTime);
+        var d = new Date(inputTime);
+        // var d = new Date;
+        var y = d.getFullYear();
+        //add one to month, as January is month 0:
+        var m = d.getMonth()+1;
+        var day = d.getDate();
+        var n = d.getTime() / 1000;
+        // console.log("url1: ", url)
+        console.log("Time: ", n)
+        console.log("Date: ", d)
+        console.log("Year: ", y)
+        console.log("Month: ", m)
+        console.log("Day: ", day)
+        console.log("Trip start time: ",inputTime)
+        console.log(y, m, day);
+
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time=10:00:00";
+        console.log(url); 
+        return url
+      };
+
+      function generate_url_2 (arrivalTime) {
+        var pointB = marker2.getLatLng();
+        var pointC = marker3.getLatLng();
+        // var inputTime = $("input#dateTime").val();
+        var inputTime = arrivalTime;
+        var d = new Date(inputTime);
+        var y = d.getFullYear();
+        var m = d.getMonth()+1;
+        var day = d.getDate();
+        var n = d.getTime();
+
+        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&date="+y+"-"+m+"-"+day+"&time="+n+"&arriveBy=false"
+        console.log("url2 input time: ", inputTime);
+        console.log("url2 date: ", d);
+        console.log("url2 time: ", n);
+        console.log(url2)
+        return url2
+      };
 
       $(document).ready(function () {
-        $(".ui-button_marker").click(addMarker);
+        $(".ui-button_route").click(get_route_1);
+        // $(".ui-button_marker").click(addMarker);
       });
+
+      // $(document).ready(function () {
+      //   $(".ui-button_marker").click(addMarker);
+      // });
 
       function draw_route_1 (data) {
 
