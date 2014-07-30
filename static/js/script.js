@@ -13,10 +13,10 @@
   var marker = createMarker('CC0033', '1');
   var marker2 = createMarker('CC0033', '2');
   var marker3 = createMarker('CC0033', '3');
-  var marker4 = createMarker('CC0033', '4');
+  // var marker4 = createMarker('CC0033', '4');
 
 
-  var markerCount = 0
+  var markerCount = 0;
 
   function createMarker(color, symbol) {
 
@@ -28,43 +28,16 @@
     return newMarker;
   }
 
-  function addMarker() {
+  function addMarker(color,symbol) {
     var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
     icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
     draggable: true
     }).addTo(map);
-  };
-
-
-  // markerLocation();
-
-  // markerLocation2();
-
-  // markerLocation3();
-
-
-  // marker.on('dragend', markerLocation);
-  // marker2.on('dragend', markerLocation2); 
-  // marker3.on('dragend', markerLocation3); 
-
-  // function markerLocation() {
-  //     var pointA = marker.getLatLng();
-  //     coordinates.innerHTML = 'POINT A <br>Latitude: ' + pointA.lat + '<br />Longitude: ' + pointA.lng;
-  // };
-
-  // function markerLocation2() {
-  //     var pointB = marker2.getLatLng();
-  //     coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
-  // };  
-
-  // function markerLocation3() {
-  //     var pointC = marker3.getLatLng();
-  //     coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
-  // };      
+  }
 
   function get_route_1 () {
     pathLayer.clearLayers();
-    var url = generate_url();      
+    var url = generate_url();
     $.getJSON(url, function(data) {
       $.each(data, function(index, element) {
         $('body').append($('<div>', {
@@ -74,7 +47,7 @@
       draw_route_1(data);
       var arrivalTime = data.plan.itineraries[0].endTime;
       get_route_2(arrivalTime);
-    });  
+    });
   }
 
   function get_route_2 (arrivalTime) {
@@ -84,9 +57,9 @@
           $('body').append($('<div>', {
             text: element.name
           }));
-        })
+        });
         draw_route_2(data2);
-    })
+    });
   }
 
    function generate_url(inputTime, delayTime) {
@@ -104,17 +77,15 @@
 
     url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
     // console.log(url); 
-    return url
-  };
+    return url;
+  }
 
   function generate_url_2 (arrivalTime) {
     var pointB = marker2.getLatLng();
     var pointC = marker3.getLatLng();
     var inputTime = arrivalTime;
 
-
     // var delay = ***INPUT FROM MINUTE FORM****
-
 
     var d = new Date(inputTime);
     var year = d.getFullYear();
@@ -127,25 +98,25 @@
 
     url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
     // console.log(url2)
-    return url2
-  };
+    return url2;
+  }
 
   $(document).ready(function () {
     $(".ui-button_route").click(get_route_1);
   });
 
-  // $(document).ready(function () {
-  //   $(".ui-button_marker").click(addMarker);
-  // });
+  $(document).ready(function () {
+    $(".ui-button_marker").click(addMarker);
+  });
 
   function draw_route_1 (data) {
 
-    var legs = data.plan.itineraries[0].legs
+    var legs = data.plan.itineraries[0].legs;
 
     for(var i=0; i < legs.length; i++) {
       var leg = legs[i];
-      var endTime = new Date(leg.endTime)
-      var startTime = new Date(leg.startTime)
+      var endTime = new Date(leg.endTime);
+      var startTime = new Date(leg.startTime);
       var startHour = startTime.getHours();
       var startMin = startTime.getMinutes();
       var endHour = endTime.getHours();
@@ -158,12 +129,12 @@
   }
 
   function draw_route_2 (data2) {
-    var legs = data2.plan.itineraries[0].legs
+    var legs = data2.plan.itineraries[0].legs;
 
     for(var i=0; i < legs.length; i++) {
       var leg = legs[i];
-      var endTime = new Date(leg.endTime)
-      var startTime = new Date(leg.startTime)
+      var endTime = new Date(leg.endTime);
+      var startTime = new Date(leg.startTime);
       var startHour = startTime.getHours();
       var startMin = startTime.getMinutes();
       var endHour = endTime.getHours();
@@ -174,4 +145,4 @@
       route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
     }
   }
-})(); 
+})();
