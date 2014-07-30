@@ -12,22 +12,19 @@
 
   var markerCount = 1
 
-  var marker = createMarker('CC0033', '1');
-  var marker2 = createMarker('CC0033', '2');
-  var marker3 = createMarker('CC0033', '3');
+  // var marker = createMarker('CC0033', '1');
+  // var marker2 = createMarker('CC0033', '2');
+  // var marker3 = createMarker('CC0033', '3');
   // var marker4 = createMarker('CC0033', '4');
 
+  // function createMarker(color, symbol) {
 
-  
-
-  function createMarker(color, symbol) {
-
-    var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
-      icon: L.mapbox.marker.icon({'marker-color': color, 'marker-symbol': symbol}),
-      draggable: true
-    }).addTo(map);
-    return newMarker;
-  }
+  //   var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+  //     icon: L.mapbox.marker.icon({'marker-color': color, 'marker-symbol': symbol}),
+  //     draggable: true
+  //   }).addTo(map);
+  //   return newMarker;
+  // }
 
   function addMarker() {
     if (markerCount <= 4) {
