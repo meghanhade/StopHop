@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
-    <title>Map</title>
+    <title>Time Delay Map</title>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.css' rel='stylesheet' />
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
     <script src="jquery-1.11.1.min.js"></script>
@@ -209,6 +209,7 @@
         pathLayer.clearLayers();
         var url = generate_url();       
         $.getJSON(url, function(data) {
+          console.log("get_route_1 worked");
           $.each(data, function(index, element) {
             $('body').append($('<div>', {
               text: element.name
@@ -216,13 +217,16 @@
           });
           draw_route_1(data);
           var arrivalTime = data.plan.itineraries[0].endTime;
+          console.log("get_route_1 arrival time: ", arrivalTime);
           get_route_2(arrivalTime);
         });  
       }
 
       function get_route_2 (arrivalTime) {
         var url2 = generate_url_2(arrivalTime);
+        console.log("get_route_2 departure time: ", arrivalTime)
        $.getJSON(url2, function(data2) {
+            console.log("get_route_2 worked");
             $.each(data2, function(index, element) {
               $('body').append($('<div>', {
                 text: element.name
@@ -236,6 +240,7 @@
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
         var inputTime = $("input#dateTime").val();
+        console.log("input time: ",inputTime)
         var d = new Date(inputTime);
         var year = d.getFullYear();
         //add one to month, as January is month 0:
@@ -256,7 +261,7 @@
         var inputTime = arrivalTime;
 
 
-        // var delay = ***INPUT FROM MINUTE FORM****
+        var delay = ***INPUT FROM MINUTE FORM****
 
 
         
@@ -270,7 +275,9 @@
         var min = d.getMinutes();
 
         url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
-        // console.log(url2)
+        console.log("url2 input time: ", inputTime);
+        console.log("url2 date: ", d);
+        console.log(url2)
         return url2
       };
 
@@ -288,16 +295,12 @@
 
         for(var i=0; i < legs.length; i++) {
           var leg = legs[i];
-          var endTime = new Date(leg.endTime)
+          var newDate = new Date(leg.endTime)
           var startTime = new Date(leg.startTime)
-          var startHour = startTime.getHours();
-          var startMin = startTime.getMinutes();
-          var endHour = endTime.getHours();
-          var endMin = endTime.getMinutes();
           // draw the polyline
           var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           route_line.leg = leg;
-          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". Depart at: "+startTime+". Arrive by: "+newDate);
         }
       }
 
@@ -306,16 +309,15 @@
 
         for(var i=0; i < legs.length; i++) {
           var leg = legs[i];
-          var endTime = new Date(leg.endTime)
-          var startTime = new Date(leg.startTime)
-          var startHour = startTime.getHours();
-          var startMin = startTime.getMinutes();
-          var endHour = endTime.getHours();
-          var endMin = endTime.getMinutes();
+          endTime = new Date(leg.endTime)
+          startTime = new Date(leg.startTime)
+          var hour = endTime.getHours();
+          var min = endTime.getMinutes();
           // draw the polyline
           var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           route_line.leg = leg;
-          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". Depart at: "+startTime+". Arrive by: "+endTime);
+          console.log("hour: ", hour);
         }
       }
 

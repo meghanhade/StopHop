@@ -1,7 +1,9 @@
+current
+
 <!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
-    <title>Map</title>
+    <title>Time Delay Map</title>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.css' rel='stylesheet' />
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
     <script src="jquery-1.11.1.min.js"></script>
@@ -12,7 +14,7 @@
       #minuteDelay {
         display:block;
         position:absolute;
-        bottom:385px;
+        bottom:350px;
         left:30px;
         width:180px;
         z-index:100;
@@ -24,21 +26,21 @@
         background: white;
       }
       #dateTime {
+        background:white;
+        color:black;
         display:block;
         position:absolute;
-        bottom:350px;
+        bottom:405px;
         left:30px;
-        /*width:180px;*/
-        height: 20px;
+        height: 40px;
         z-index:100;
         font-family: sans-serif;
         font-size: 16px;
-        /*text-align:center;*/
         padding:5px;
         border:0px solid rgba(0,0,0,0.4);
         border-radius:3px;
       }
-      }
+      
     </style>
   </head>
   
@@ -123,7 +125,11 @@
         }
     </style>
 
-    <input id='dateTime' type=datetime-local>
+    <!-- <input id='dateTime' type=datetime-local> -->
+   
+    <form id='dateTime'>
+      Trip start day and time: <br><input type=datetime-local>
+    </form>
     <div id='map'></div>
     <a class='ui-button_marker'>Add marker</a>
     <a class='ui-button_route'>Find route</a>
@@ -132,9 +138,8 @@
     <pre id='coordinates3' class='pointC-coordinates3'></pre>
 
 
-    <form id='minuteDelay' action="demo_form.asp">
+    <form id='minuteDelay'>
       Time needed at stop #2: <input type="number" name="quantity" placeholder="Minutes" min="0">
-      <input type="submit">
     </form>
 
     
@@ -153,26 +158,26 @@
       var pathLayer = new L.LayerGroup().addTo(map);
         
       var marker = L.marker(new L.LatLng(45.52282, -122.6766), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '1'}),
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
         }).addTo(map);
 
       var marker2 = L.marker(new L.LatLng(45.52282, -122.69), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '2'}),
+        icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
         }).addTo(map);
 
       var marker3 = L.marker(new L.LatLng(45.515609, -122.682437), {
-        icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '3'}),
-        draggable: true
-        }).addTo(map);
-
-      function addMarker() {
-        var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
         icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
         draggable: true
         }).addTo(map);
-        };
+
+      // function addMarker() {
+      //   var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+      //   icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
+      //   draggable: true
+      //   }).addTo(map);
+      //   };
 
     
       markerLocation();
@@ -209,6 +214,7 @@
         pathLayer.clearLayers();
         var url = generate_url();       
         $.getJSON(url, function(data) {
+          console.log("get_route_1 worked");
           $.each(data, function(index, element) {
             $('body').append($('<div>', {
               text: element.name
@@ -216,13 +222,16 @@
           });
           draw_route_1(data);
           var arrivalTime = data.plan.itineraries[0].endTime;
+          console.log("get_route_1 arrival time: ", arrivalTime);
           get_route_2(arrivalTime);
         });  
       }
 
       function get_route_2 (arrivalTime) {
         var url2 = generate_url_2(arrivalTime);
+        console.log("get_route_2 departure time: ", arrivalTime)
        $.getJSON(url2, function(data2) {
+            console.log("get_route_2 worked");
             $.each(data2, function(index, element) {
               $('body').append($('<div>', {
                 text: element.name
@@ -232,50 +241,52 @@
         })
       }
 
-       function generate_url() {
+      function generate_url() {
         var pointA = marker.getLatLng();
         var pointB = marker2.getLatLng();
         var inputTime = $("input#dateTime").val();
+        // console.log(inputTime);
         var d = new Date(inputTime);
-        var year = d.getFullYear();
+        // var d = new Date;
+        var y = d.getFullYear();
         //add one to month, as January is month 0:
-        var month = d.getMonth()+1;
+        var m = d.getMonth()+1;
         var day = d.getDate();
-        //add 7 hours to adjust for GMT:
-        var hour = d.getHours() + 7;
-        var min = d.getMinutes();
+        var n = d.getTime();
 
-        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
-        console.log(url); 
+        url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+        console.log(url)
         return url
       };
 
       function generate_url_2 (arrivalTime) {
         var pointB = marker2.getLatLng();
         var pointC = marker3.getLatLng();
+        // var inputTime = $("input#dateTime").val();
         var inputTime = arrivalTime;
-
-
-        // var delay = ***INPUT FROM MINUTE FORM****
-
-
-        
         var d = new Date(inputTime);
-        var year = d.getFullYear();
-        //add one to month, as January is month 0:
-        var month = d.getMonth()+1;
+        var y = d.getFullYear();
+        var m = d.getMonth()+1;
         var day = d.getDate();
-        //arrivalTime hours are already adjusted for GMT:
-        var hour = d.getHours();
-        var min = d.getMinutes();
+        var n = d.getTime();
 
-        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
-        // console.log(url2)
+        url2 = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointB.lat+"%2C"+pointB.lng+"&toPlace="+pointC.lat+"%2C"+pointC.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+y+"-"+m+"-"+day+"&time="+n
+        console.log("url2 input time: ", inputTime);
+        console.log("url2 date: ", d);
+        console.log("url2 time: ", n);
+        console.log(url2)
         return url2
       };
 
+      function timeDelay () {
+
+        console.log("timeDelay is working onClick")
+      }
+
       $(document).ready(function () {
         $(".ui-button_route").click(get_route_1);
+        $(".ui-button_route").click(timeDelay);
+        // $(".ui-button_marker").click(addMarker);
       });
 
       // $(document).ready(function () {
@@ -288,34 +299,29 @@
 
         for(var i=0; i < legs.length; i++) {
           var leg = legs[i];
-          var endTime = new Date(leg.endTime)
-          var startTime = new Date(leg.startTime)
-          var startHour = startTime.getHours();
-          var startMin = startTime.getMinutes();
-          var endHour = endTime.getHours();
-          var endMin = endTime.getMinutes();
+          newDate = new Date(leg.endTime)
+          startTime = new Date(leg.startTime)
           // draw the polyline
           var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           route_line.leg = leg;
-          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". Depart at: "+startTime+". Arrive by: "+newDate);
         }
+        // map.fitBounds(route_line.getBounds());
       }
 
       function draw_route_2 (data2) {
+        // console.log("running draw_route_2");
+        // console.log("data2: ", data2);
         var legs = data2.plan.itineraries[0].legs
 
         for(var i=0; i < legs.length; i++) {
           var leg = legs[i];
-          var endTime = new Date(leg.endTime)
-          var startTime = new Date(leg.startTime)
-          var startHour = startTime.getHours();
-          var startMin = startTime.getMinutes();
-          var endHour = endTime.getHours();
-          var endMin = endTime.getMinutes();
+          newDate = new Date(leg.endTime)
+          startTime = new Date(leg.startTime)
           // draw the polyline
           var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
           route_line.leg = leg;
-          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+          route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". Depart at: "+startTime+". Arrive by: "+newDate);
         }
       }
 
