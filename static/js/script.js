@@ -10,17 +10,13 @@
 
   var pathLayer = new L.LayerGroup().addTo(map);
     
-  var marker = L.marker(new L.LatLng(45.52282, -122.6766), {
-    icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '1'}),
-    draggable: true
-    }).addTo(map);
-
-  var marker2 = L.marker(new L.LatLng(45.52282, -122.69), {
-    icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': '2'}),
-    draggable: true
-    }).addTo(map);
-
+  var marker = createMarker('CC0033', '1');
+  var marker2 = createMarker('CC0033', '2');
   var marker3 = createMarker('CC0033', '3');
+  var marker3 = createMarker('CC0033', '4');
+
+
+  var markerCount = 0
 
   function createMarker(color, symbol) {
 
@@ -37,7 +33,7 @@
     icon: L.mapbox.marker.icon({'marker-color': 'CC0033'}),
     draggable: true
     }).addTo(map);
-    };
+  };
 
 
   markerLocation();
@@ -48,12 +44,8 @@
 
 
   marker.on('dragend', markerLocation);
-
   marker2.on('dragend', markerLocation2); 
-
   marker3.on('dragend', markerLocation3); 
-
-  
 
   function markerLocation() {
       var pointA = marker.getLatLng();
@@ -111,7 +103,7 @@
     var min = d.getMinutes();
 
     url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
-    console.log(url); 
+    // console.log(url); 
     return url
   };
 
@@ -124,7 +116,6 @@
     // var delay = ***INPUT FROM MINUTE FORM****
 
 
-    
     var d = new Date(inputTime);
     var year = d.getFullYear();
     //add one to month, as January is month 0:
