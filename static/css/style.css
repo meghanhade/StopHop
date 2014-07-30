@@ -1,0 +1,113 @@
+#map { position:absolute; top:0; bottom:0; left:0; width:100%; }
+#minuteDelay {
+    display:block;
+    position:absolute;
+    bottom:385px;
+    left:30px;
+    width:180px;
+    z-index:100;
+    font-family: sans-serif;
+    font-size: 16px;
+    padding:5px;
+    border:0px solid rgba(0,0,0,0.4);
+    border-radius:3px;
+    background: white;
+}
+#dateTime {
+    display:block;
+    position:absolute;
+    bottom:350px;
+    left:30px;
+    /*width:180px;*/
+    height: 20px;
+    z-index:100;
+    font-family: sans-serif;
+    font-size: 16px;
+    /*text-align:center;*/
+    padding:5px;
+    border:0px solid rgba(0,0,0,0.4);
+    border-radius:3px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<style>
+pre.pointA-coordinates {
+    position:absolute;
+    bottom:160px;
+    left:30px;
+    padding:5px 10px;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    font-size:13px;
+    line-height:18px;
+    border-radius:3px;
+}
+pre.pointB-coordinates2 {
+    position:absolute;
+    bottom:90px;
+    left:30px;
+    padding:5px 10px;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    font-size:13px;
+    line-height:18px;
+    border-radius:3px;
+}
+
+pre.pointC-coordinates3 {
+    position:absolute;
+    bottom:20px;
+    left:30px;
+    padding:5px 10px;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    font-size:13px;
+    line-height:18px;
+    border-radius:3px;
+}
+
+.ui-button_route {
+    background:#3887BE;
+    color:#FFF;
+    display:block;
+    position:absolute;
+    bottom:250px;
+    left:30px;
+    width:130px;
+    height: 20px;
+    z-index:100;
+    text-align:center;
+    padding:10px;
+    border:0px solid rgba(0,0,0,0.4);
+    border-radius:3px;
+}
+
+.ui-button_route:hover {
+    background:#3074a4;
+    color:#fff;
+}
+
+.ui-button_marker {
+    background:#3887BE;
+    color:#FFF;
+    display:block;
+    position:absolute;
+    bottom:300px;
+    left:30px;
+    width:130px;
+    height: 20px;
+    z-index:100;
+    text-align:center;
+    padding:10px;
+    border:0px solid rgba(0,0,0,0.4);
+    border-radius:3px;
+}
+
+.ui-button_marker:hover {
+    background:#3074a4;
+    color:#fff;
+}
