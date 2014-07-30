@@ -13,7 +13,7 @@
   var marker = createMarker('CC0033', '1');
   var marker2 = createMarker('CC0033', '2');
   var marker3 = createMarker('CC0033', '3');
-  var marker3 = createMarker('CC0033', '4');
+  var marker4 = createMarker('CC0033', '4');
 
 
   var markerCount = 0
@@ -36,31 +36,31 @@
   };
 
 
-  markerLocation();
+  // markerLocation();
 
-  markerLocation2();
+  // markerLocation2();
 
-  markerLocation3();
+  // markerLocation3();
 
 
-  marker.on('dragend', markerLocation);
-  marker2.on('dragend', markerLocation2); 
-  marker3.on('dragend', markerLocation3); 
+  // marker.on('dragend', markerLocation);
+  // marker2.on('dragend', markerLocation2); 
+  // marker3.on('dragend', markerLocation3); 
 
-  function markerLocation() {
-      var pointA = marker.getLatLng();
-      coordinates.innerHTML = 'POINT A <br>Latitude: ' + pointA.lat + '<br />Longitude: ' + pointA.lng;
-  };
+  // function markerLocation() {
+  //     var pointA = marker.getLatLng();
+  //     coordinates.innerHTML = 'POINT A <br>Latitude: ' + pointA.lat + '<br />Longitude: ' + pointA.lng;
+  // };
 
-  function markerLocation2() {
-      var pointB = marker2.getLatLng();
-      coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
-  };  
+  // function markerLocation2() {
+  //     var pointB = marker2.getLatLng();
+  //     coordinates2.innerHTML = 'POINT B <br>Latitude: ' + pointB.lat + '<br />Longitude: ' + pointB.lng;
+  // };  
 
-  function markerLocation3() {
-      var pointC = marker3.getLatLng();
-      coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
-  };      
+  // function markerLocation3() {
+  //     var pointC = marker3.getLatLng();
+  //     coordinates3.innerHTML = 'POINT C <br>Latitude: ' + pointC.lat + '<br />Longitude: ' + pointC.lng;
+  // };      
 
   function get_route_1 () {
     pathLayer.clearLayers();
