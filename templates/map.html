@@ -14,11 +14,7 @@
     <div id='map'></div>
     <a class='ui-button_marker'>Add destination</a>
     <a class='ui-button_route'>Find route</a>
-    <!-- <pre id='coordinates' class='pointA-coordinates'></pre>
-    <pre id='coordinates2' class='pointB-coordinates2'></pre>
-    <pre id='coordinates3' class='pointC-coordinates3'></pre> -->
-
-    
+        
     <div id="minuteDelay2">
       Time needed at stop #2: <input id="delayTime2" type="number" name="quantity" placeholder="Minutes" min="0">
     </div>
@@ -26,7 +22,13 @@
     <div id="minuteDelay3">
       Time needed at stop #3: <input id="delayTime3" type="number" name="quantity" placeholder="Minutes" min="0">
     </div>
-    
+
+    <div id="roundTrip">
+      <input type="checkbox" name="roundTrip">Roundtrip
+    </div>
+
+    <input type="checkbox" id="isAgeSelected"/>
+    <div id="txtAge" style="display:none">Age is something</div>   
 
     <script type='text/javascript' src="../static/js/script.js"></script>
 
