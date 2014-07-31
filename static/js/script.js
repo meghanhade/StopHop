@@ -36,12 +36,13 @@
   function generic_generate_url(fromMarker, toMarker, inputTime, delayTime) {
     var pointA = fromMarker.getLatLng();
     var pointB = toMarker.getLatLng();
-    if (delayTime === 'undefined'){
-      delayTime = 0;
-    }
-    if (inputTime === undefined) {
-      inputTime = $("input#dateTime").val();
-    }
+    delayTime = 0;
+    // if (delayTime === undefined){
+    //   delayTime = 0;
+    // }
+    // if (inputTime === undefined) {
+    //   inputTime = $("input#dateTime").val();
+    // }
     var delay = parseInt(delayTime) * 60 * 1000;
     var delayedStart = delay + inputTime;
     var d = new Date(delayedStart);
@@ -62,6 +63,9 @@
     pathLayer.clearLayers();
     var fromMarker = markerList[0];
     var toMarker = markerList[1];
+    var inputTime = Date.now();
+    // var inputTime = $("input#dateTime").val();
+    var delayTime = 0;
     var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
     $.getJSON(url, function(data) {
       $.each(data, function(index, element) {
@@ -72,7 +76,7 @@
       draw_routes(data);
       var inputTime = data.plan.itineraries[0].endTime;
       var delayTime = $("#delayTime2").val();
-      get_route_2(arrivalTime, delayTime);
+      get_route_2(inputTime, delayTime);
     });
   }
 
@@ -92,7 +96,7 @@
         draw_routes(data);
         var inputTime = data.plan.itineraries[0].endTime;
         var delayTime = $("#delayTime3").val();
-        get_route_3(arrivalTime, delayTime);
+        get_route_3(inputTime, delayTime);
     });
   }
 
@@ -114,7 +118,6 @@
   }
 
   function draw_routes (data) {
-
     var legs = data.plan.itineraries[0].legs;
 
     for(var i=0; i < legs.length; i++) {
