@@ -21,10 +21,7 @@
       draggable: true
       }).addTo(map);
       markerCount += 1;
-      markerList.push(newMarker);
-      console.log(markerList);
-      for (var marker in markerList) {
-        console.log(marker);
+      markerList.push(newMarker);    
       }
     }
     else {
@@ -58,59 +55,62 @@
     return url;
   }
 
-  function get_route_1 () {
-    pathLayer.clearLayers();
-    var fromMarker = markerList[0];
-    var toMarker = markerList[1];
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-    $.getJSON(url, function(data) {
-      $.each(data, function(index, element) {
-        $('body').append($('<div>', {
-          text: element.name
-        }));
-      });
-      draw_routes(data);
-      var inputTime = data.plan.itineraries[0].endTime;
-      var delayTime = $("#delayTime2").val();
-      get_route_2(arrivalTime, delayTime);
-    });
-  }
-
-  function get_route_2 (inputTime, delayTime) {
-    if (delayTime === 'undefined'){
-      delayTime = 0;
-    }
-    var fromMarker = markerList[1];
-    var toMarker = markerList[2];
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-   $.getJSON(url, function(data) {
-        $.each(data, function(index, element) {
-          $('body').append($('<div>', {
-            text: element.name
-          }));
+  function get_routes () {
+    //how to cycle through array?
+    for (var i=0; i < 4; i++) {
+      if (i === "0") {
+        pathLayer.clearLayers();
+        var fromMarker = markerList[0];
+        var toMarker = markerList[1];
+        $.getJSON(url, function(data) {
+          $.each(data, function(index, element) {
+            $('body').append($('<div>', {
+              text: element.name
+            }));
+          });
+          draw_routes(data);
+          //this is where I pass the delay to the next route
+          var inputTime = data.plan.itineraries[0].endTime;
+          var delayTime = $("#delayTime2").val();
+          get_route_2(arrivalTime, delayTime);
         });
-        draw_routes(data);
-        var inputTime = data.plan.itineraries[0].endTime;
-        var delayTime = $("#delayTime3").val();
-        get_route_3(arrivalTime, delayTime);
-    });
-  }
-
-  function get_route_3 (inputTime, delayTime) {
-    if (delayTime === 'undefined'){
-      delayTime = 0;
-    }
-    var fromMarker = markerList[2];
-    var toMarker = markerList[3];
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-   $.getJSON(url, function(data) {
-        $.each(data, function(index, element) {
-          $('body').append($('<div>', {
-            text: element.name
-          }));
+      } else if (i == "1") {
+        if (delayTime === 'undefined'){
+          delayTime = 0;
+        }
+        var fromMarker = markerList[1];
+        var toMarker = markerList[2];
+        var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
+        $.getJSON(url, function(data) {
+            $.each(data, function(index, element) {
+              $('body').append($('<div>', {
+                text: element.name
+              }));
+            });
+            draw_routes(data);
+            //this is where I pass the delay to the next route
+            var inputTime = data.plan.itineraries[0].endTime;
+            var delayTime = $("#delayTime3").val();
+            get_route_3(arrivalTime, delayTime);
         });
-        draw_routes(data);
-    });
+      } else {
+        if (delayTime === 'undefined'){
+          delayTime = 0;
+        }
+        var fromMarker = markerList[2];
+        var toMarker = markerList[3];
+        var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
+       $.getJSON(url, function(data) {
+            $.each(data, function(index, element) {
+              $('body').append($('<div>', {
+                text: element.name
+              }));
+            });
+            draw_routes(data);
+            //this is where I need to make the round trip optional
+        });
+      }
+    }
   }
 
   function draw_routes (data) {

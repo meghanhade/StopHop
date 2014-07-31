@@ -58,23 +58,59 @@
     return url;
   }
 
-  function get_routes () {
-    //if roundtrip is selected, push marker 1 to array as marker 5
-    //for each marker in array, set marker and marker+1 as fromMarker and toMarker
-    //set delayTime to take delay minutes from the correct form for that marker
-    //send generic_generate_url an input time based on the returned arrival time from the last route
-      for (var i=0; i < 4; i++) {
-        if (i === "2") {
-            // some jquery to retrieve input
+  function get_route_1 () {
+    pathLayer.clearLayers();
+    var fromMarker = markerList[0];
+    var toMarker = markerList[1];
+    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
+    $.getJSON(url, function(data) {
+      $.each(data, function(index, element) {
+        $('body').append($('<div>', {
+          text: element.name
+        }));
+      });
+      draw_routes(data);
+      var inputTime = data.plan.itineraries[0].endTime;
+      var delayTime = $("#delayTime2").val();
+      get_route_2(arrivalTime, delayTime);
+    });
+  }
 
-            generic_generate_url()//include delay)
-        } else if (i == "3") {
+  function get_route_2 (inputTime, delayTime) {
+    if (delayTime === 'undefined'){
+      delayTime = 0;
+    }
+    var fromMarker = markerList[1];
+    var toMarker = markerList[2];
+    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
+   $.getJSON(url, function(data) {
+        $.each(data, function(index, element) {
+          $('body').append($('<div>', {
+            text: element.name
+          }));
+        });
+        draw_routes(data);
+        var inputTime = data.plan.itineraries[0].endTime;
+        var delayTime = $("#delayTime3").val();
+        get_route_3(arrivalTime, delayTime);
+    });
+  }
 
-        } else {
-          // don't pass in delay
-        }
-      }
-
+  function get_route_3 (inputTime, delayTime) {
+    if (delayTime === 'undefined'){
+      delayTime = 0;
+    }
+    var fromMarker = markerList[2];
+    var toMarker = markerList[3];
+    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
+   $.getJSON(url, function(data) {
+        $.each(data, function(index, element) {
+          $('body').append($('<div>', {
+            text: element.name
+          }));
+        });
+        draw_routes(data);
+    });
   }
 
   function draw_routes (data) {
