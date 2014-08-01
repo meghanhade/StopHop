@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset=utf-8 />
-    <title>Map</title>
+    <title>StopHop</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <!-- <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css"> -->
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
@@ -13,10 +13,20 @@
   </head>
   <body>  
     <input id='dateTime' type=datetime-local>
+    <div id="leaveNow">
+      <input type="checkbox" name="leaveNow">Leave now
+    </div>  
     <div id='map'></div>
     <a class='ui-button_marker'>Add destination</a>
     <a class='ui-button_route'>Find route</a>
         
+    <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+
     <div id="minuteDelay2">
       Time needed at stop #2: <input id="delayTime2" type="number" name="quantity" placeholder="Minutes" min="0">
     </div>
