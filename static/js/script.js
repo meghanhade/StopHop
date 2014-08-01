@@ -12,6 +12,7 @@
 
   var markerCount = 1;
   var markerList = [];
+  var markerDict = {};
 
   function addMarker() {
     if (markerCount <= 4) {
@@ -20,14 +21,11 @@
       icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': markerCountString}),
       draggable: true
       }).addTo(map);
+      markerDict[markerCount] = {"marker":newMarker};
+      console.log(markerDict);
       markerCount += 1;
       markerList.push(newMarker);
-      console.log(markerList);
-      for (var marker in markerList) {
-        console.log(marker);
-      }
-    }
-    else {
+    } else {
       window.alert("Sorry, you've reached the maximum number of destinations (4).");
     }
   }
@@ -59,13 +57,28 @@
     return url;
   }
 
-  function get_route_1 () {
+  function routeManager () {
     pathLayer.clearLayers();
-    var fromMarker = markerList[0];
-    var toMarker = markerList[1];
-    var inputTime = Date.now();
-    // var inputTime = $("input#dateTime").val();
-    var delayTime = 0;
+    var delay2 = 10; //form response
+    var delay3 = 10; //form response
+    markerDict[1]["delay"] = 0;
+    markerDict[2]["delay"] = delay2;
+    markerDict[3]["delay"] = delay3;
+    console.log(markerDict);
+    //call getRoutes() here
+    var dictLength = Object.keys(markerDict).length;
+    var inputTime = Date.now(); //SET THIS TO FORM RESPONSE!!!!!
+    console.log(markerDict);
+    for (var i = 1; i < dictLength; i++) {
+      console.log(i);
+      var fromMarker = markerDict[i]["marker"];
+      var toMarker = markerDict[i + 1]["marker"];
+      var delayTime = markerDict[i]["delay"];
+      inputTime = getRoutes (fromMarker, toMarker, inputTime, delayTime); //the return of getRoutes
+    }
+  }
+
+  function getRoutes (fromMarker, toMarker, inputTime, delayTime) {
     var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
     $.getJSON(url, function(data) {
       $.each(data, function(index, element) {
@@ -75,46 +88,8 @@
       });
       draw_routes(data);
       var inputTime = data.plan.itineraries[0].endTime;
-      var delayTime = $("#delayTime2").val();
-      get_route_2(inputTime, delayTime);
     });
-  }
-
-  function get_route_2 (inputTime, delayTime) {
-    if (delayTime === 'undefined'){
-      delayTime = 0;
-    }
-    var fromMarker = markerList[1];
-    var toMarker = markerList[2];
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-   $.getJSON(url, function(data) {
-        $.each(data, function(index, element) {
-          $('body').append($('<div>', {
-            text: element.name
-          }));
-        });
-        draw_routes(data);
-        var inputTime = data.plan.itineraries[0].endTime;
-        var delayTime = $("#delayTime3").val();
-        get_route_3(inputTime, delayTime);
-    });
-  }
-
-  function get_route_3 (inputTime, delayTime) {
-    if (delayTime === 'undefined'){
-      delayTime = 0;
-    }
-    var fromMarker = markerList[2];
-    var toMarker = markerList[3];
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-   $.getJSON(url, function(data) {
-        $.each(data, function(index, element) {
-          $('body').append($('<div>', {
-            text: element.name
-          }));
-        });
-        draw_routes(data);
-    });
+    return inputTime;
   }
 
   function draw_routes (data) {
@@ -136,7 +111,7 @@
   }
 
   $(document).ready(function () {
-    $(".ui-button_route").click(get_route_1);
+    $(".ui-button_route").click(routeManager);
     $(".ui-button_marker").click(addMarker);
     //$('.ui-button_route').click(get_routes);
   });
