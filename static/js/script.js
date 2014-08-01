@@ -98,6 +98,7 @@
     var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
     var routesData;
     $.ajax({
+      //spinner here?
       url: url,
       dataType: 'json',
       async: false,
