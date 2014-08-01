@@ -52,8 +52,8 @@
     var hour = d.getHours();
     var min = d.getMinutes();
 
-    url = "http:localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
-    // console.log(url); 
+    url = "http://localhost:8080/otp/routers/default/plan?fromPlace="+pointA.lat+"%2C"+pointA.lng+"&toPlace="+pointB.lat+"%2C"+pointB.lng+"&mode=TRANSIT%2CWALK&maxWalkDistance=750&arriveBy=false&date="+year+"-"+month+"-"+day+"&time="+hour+":"+min;
+    // console.log(url);
     return url;
   }
 
@@ -70,30 +70,49 @@
     var inputTime = Date.now(); //SET THIS TO FORM RESPONSE!!!!!
     console.log(markerDict);
     for (var i = 1; i < dictLength; i++) {
-      console.log(i);
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
       var delayTime = markerDict[i]["delay"];
-      inputTime = getRoutes (fromMarker, toMarker, inputTime, delayTime); //the return of getRoutes
+      route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
+      draw_route(route);
+      // TODO add spinner or force the UI/Page to draw (ask John about redraw on polyline)
+      //can I make data fecthing asynchronous and then sort out start/end times afterwards? (and space out at minimum by delay time)
+      endTime = route.endTime;
+      // update for next input time
+      inputTime = endTime + delayTime;
+      console.log([fromMarker, toMarker, inputTime, delayTime]);
     }
   }
 
   function getRoutes (fromMarker, toMarker, inputTime, delayTime) {
     var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-    $.getJSON(url, function(data) {
-      $.each(data, function(index, element) {
-        $('body').append($('<div>', {
-          text: element.name
-        }));
-      });
-      draw_routes(data);
-      var inputTime = data.plan.itineraries[0].endTime;
+    var routesData;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      async: false,
+      data:"",
+      success: function(data) {
+        routesData = data;
+      }
     });
-    return inputTime;
+    return routesData;
   }
 
-  function draw_routes (data) {
-    var legs = data.plan.itineraries[0].legs;
+  function findBestRoute(routes) {
+    // TODO actually find best route
+    return routes.plan.itineraries[0];
+  }
+
+  function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
+    routes = getRoutes(fromMarker, toMarker, inputTime, delayTime);
+    route = findBestRoute(routes);
+    return route;
+  }
+
+  function draw_route (route) {
+    var legs = route.legs;
+    console.log(route.legs[0].startTime);
 
     for(var i=0; i < legs.length; i++) {
       var leg = legs[i];
