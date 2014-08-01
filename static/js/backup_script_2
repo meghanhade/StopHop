@@ -21,7 +21,7 @@
       draggable: true
       }).addTo(map);
       markerCount += 1;
-      markerList.push(newMarker);    
+      markerList.push(newMarker);
       }
     }
     else {

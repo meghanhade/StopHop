@@ -59,8 +59,10 @@
 
   function routeManager () {
     pathLayer.clearLayers();
+    var roundTrip = $("#roundTrip input").is(":checked");
     var delay2 = 10; //form response
-    var delay3 = 10; //form response
+    var delay3 = 10;
+    var delay4 = 10; //form response
     markerDict[1]["delay"] = 0;
     markerDict[2]["delay"] = delay2;
     markerDict[3]["delay"] = delay3;
@@ -69,6 +71,14 @@
     var dictLength = Object.keys(markerDict).length;
     var inputTime = Date.now(); //SET THIS TO FORM RESPONSE!!!!!
     console.log(markerDict);
+    if (roundTrip === true) {
+      console.log("ROUNDTRIP!!");
+      markerDict[5]=markerDict[1];
+    } else {
+      console.log("Not roundtrip");
+      delete markerDict[5];
+    }
+
     for (var i = 1; i < dictLength; i++) {
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
@@ -132,6 +142,8 @@
   $(document).ready(function () {
     $(".ui-button_route").click(routeManager);
     $(".ui-button_marker").click(addMarker);
+    // $('.timepicker').timepicker();
+    // $("#dateTime").val(new Date().toDateInputValue());​
     //$('.ui-button_route').click(get_routes);
   });
 
