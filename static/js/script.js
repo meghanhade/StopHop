@@ -39,19 +39,29 @@
     var delay3 = $("minuteDelay3").val();
     // var delay4 = 10; //form response
     var delay4 = $("minuteDelay4").val();
+
+
+
+    // CHANGE THESE DELAY INPUTS!
+
+
+
     markerDict[1]["delay"] = 0;
-    markerDict[2]["delay"] = delay2;
-    markerDict[3]["delay"] = delay3;
-    markerDict[4]["delay"] = delay4;
-    console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
+    markerDict[2]["delay"] = 10;
+    markerDict[3]["delay"] = 10;
+    markerDict[4]["delay"] = 10;
+    // console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
     if (leaveNow === true) {
       inputTime = Date.now();
-      console.log("if input time: ", inputTime);
+      // console.log("leave now input time: ", inputTime);
     } else {
-       // var timeForm = $("input#dateTime").val();
-       // inputTime = new Date(timeForm);
+       var timeForm = $("input#dateTime").val();
        var origInputTime = $("input#dateTime").val();
        inputTime = Date.parse(origInputTime);
+
+
+       // NEED TO SUBTRACT 8 HOURS TO ACCOUNT FOR GMT TIME
+
        console.log("Else input time: ", inputTime);
     }
     var dictLength = Object.keys(markerDict).length;
@@ -64,6 +74,7 @@
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
       var delayTime = markerDict[i]["delay"];
+      // console.log("routeManager forloop delaytime: ",i,":", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
       // TODO add spinner or force the UI/Page to draw
@@ -71,7 +82,8 @@
       endTime = route.endTime;
       // update for next input time
       inputTime = endTime + delayTime;
-      console.log([fromMarker, toMarker, inputTime, delayTime]);
+      // console.log("routeManager forloop endtime plus delaytime: ",i,":", inputTime);
+      // console.log([fromMarker, toMarker, inputTime, delayTime]);
     }
   }
 
@@ -128,7 +140,7 @@
 
   function draw_route (route) {
     var legs = route.legs;
-    console.log(route.legs[0].startTime);
+    // console.log(route.legs[0].startTime);
 
     for(var i=0; i < legs.length; i++) {
       var leg = legs[i];
