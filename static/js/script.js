@@ -22,7 +22,6 @@
       draggable: true
       }).addTo(map);
       markerDict[markerCount] = {"marker":newMarker};
-      console.log(markerDict);
       markerCount += 1;
       markerList.push(newMarker);
     } else {
@@ -30,14 +29,82 @@
     }
   }
 
+  function routeManager () {
+    pathLayer.clearLayers();
+    var roundTrip = $("#roundTrip input").is(":checked");
+    var leaveNow = $("#leaveNow input").is(":checked");
+    // var delay2 = 30; //form response
+    var delay2 = $("minuteDelay2").val();
+    // var delay3 = 10;//form response
+    var delay3 = $("minuteDelay3").val();
+    // var delay4 = 10; //form response
+    var delay4 = $("minuteDelay4").val();
+    markerDict[1]["delay"] = 0;
+    markerDict[2]["delay"] = delay2;
+    markerDict[3]["delay"] = delay3;
+    markerDict[4]["delay"] = delay4;
+    console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
+    if (leaveNow === true) {
+      inputTime = Date.now();
+      console.log("if input time: ", inputTime);
+    } else {
+       // var timeForm = $("input#dateTime").val();
+       // inputTime = new Date(timeForm);
+       var origInputTime = $("input#dateTime").val();
+       inputTime = Date.parse(origInputTime);
+       console.log("Else input time: ", inputTime);
+    }
+    var dictLength = Object.keys(markerDict).length;
+    if (roundTrip === true) {
+      markerDict[5]=markerDict[1];
+    } else {
+      delete markerDict[5];
+    }
+    for (var i = 1; i < dictLength; i++) {
+      var fromMarker = markerDict[i]["marker"];
+      var toMarker = markerDict[i + 1]["marker"];
+      var delayTime = markerDict[i]["delay"];
+      route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
+      draw_route(route);
+      // TODO add spinner or force the UI/Page to draw
+      //can I make data fetching asynchronous and then sort out start/end times afterwards? (and space out at minimum by delay time)
+      endTime = route.endTime;
+      // update for next input time
+      inputTime = endTime + delayTime;
+      console.log([fromMarker, toMarker, inputTime, delayTime]);
+    }
+  }
+
+  function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
+    routes = getRoutes(fromMarker, toMarker, inputTime, delayTime);
+    route = findBestRoute(routes);
+    return route;
+  }
+
+  function getRoutes (fromMarker, toMarker, inputTime, delayTime) {
+    var url = generate_url(fromMarker, toMarker, inputTime, delayTime);
+    var routesData;
+    $.ajax({
+      //spinner here? Cynthia thinks *maybe*
+      url: url,
+      dataType: 'json',
+      async: false,
+      data:"",
+      success: function(data) {
+        routesData = data;
+      }
+    });
+    return routesData;
+  }
+
   //inputTime is arrival time of last trip, delayTime is from form
-  function generic_generate_url(fromMarker, toMarker, inputTime, delayTime) {
+  function generate_url(fromMarker, toMarker, inputTime, delayTime) {
     var pointA = fromMarker.getLatLng();
     var pointB = toMarker.getLatLng();
-    delayTime = 0;
-    // if (delayTime === undefined){
-    //   delayTime = 0;
-    // }
+    if (delayTime === undefined){
+      delayTime = 0;
+    }
+    // THIS COULD BE WHERE THE TIME FAILS
     var delay = parseInt(delayTime) * 60 * 1000;
     var delayedStart = delay + inputTime;
     var d = new Date(delayedStart);
@@ -54,75 +121,9 @@
     return url;
   }
 
-  function routeManager () {
-    pathLayer.clearLayers();
-    var roundTrip = $("#roundTrip input").is(":checked");
-    var leaveNow = $("#leaveNow input").is(":checked");
-    var delay2 = 10; //form response
-    var delay3 = 10;
-    var delay4 = 10; //form response
-    var inputTime = $("input#dateTime").val();
-    console.log(inputTime);
-    markerDict[1]["delay"] = 0;
-    markerDict[2]["delay"] = delay2;
-    markerDict[3]["delay"] = delay3;
-    if (leaveNow === true) {
-      console.log("Leave now!");
-      var inputTime = Date.now();
-      console.log(inputTime);
-    } else {
-      console.log("Leave later");
-      console.log(inputTime);
-    }
-    var dictLength = Object.keys(markerDict).length;
-    console.log(markerDict);
-    if (roundTrip === true) {
-      console.log("ROUNDTRIP!!");
-      markerDict[5]=markerDict[1];
-    } else {
-      console.log("Not roundtrip");
-      delete markerDict[5];
-    }
-    for (var i = 1; i < dictLength; i++) {
-      var fromMarker = markerDict[i]["marker"];
-      var toMarker = markerDict[i + 1]["marker"];
-      var delayTime = markerDict[i]["delay"];
-      route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
-      draw_route(route);
-      // TODO add spinner or force the UI/Page to draw
-      //can I make data fecthing asynchronous and then sort out start/end times afterwards? (and space out at minimum by delay time)
-      endTime = route.endTime;
-      // update for next input time
-      inputTime = endTime + delayTime;
-      console.log([fromMarker, toMarker, inputTime, delayTime]);
-    }
-  }
-
-  function getRoutes (fromMarker, toMarker, inputTime, delayTime) {
-    var url = generic_generate_url(fromMarker, toMarker, inputTime, delayTime);
-    var routesData;
-    $.ajax({
-      //spinner here?
-      url: url,
-      dataType: 'json',
-      async: false,
-      data:"",
-      success: function(data) {
-        routesData = data;
-      }
-    });
-    return routesData;
-  }
-
   function findBestRoute(routes) {
     // TODO actually find best route
     return routes.plan.itineraries[0];
-  }
-
-  function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
-    routes = getRoutes(fromMarker, toMarker, inputTime, delayTime);
-    route = findBestRoute(routes);
-    return route;
   }
 
   function draw_route (route) {
@@ -151,9 +152,4 @@
     // $("#dateTime").val(new Date().toDateInputValue());​
     //$('.ui-button_route').click(get_routes);
   });
-
-  $(document).ready(function () {
-    
-  });
-
 })();
