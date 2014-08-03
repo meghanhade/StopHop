@@ -41,6 +41,7 @@
     border-radius:3px;
     background: white;
 }
+
 #roundTrip {
     display:block;
     position:absolute;
@@ -70,18 +71,25 @@
     border-radius:3px;
 }
 
-#leaveNow {
+.startOver {
+    background:#5CB9D5;
+    color:#FFF;
     display:block;
     position:absolute;
-    bottom:215px;
+    top: 250px;
     left:30px;
+    width:130px;
+    height: 20px;
     z-index:100;
-    font-family: sans-serif;
-    font-size: 16px;
-    padding:5px;
+    text-align:center;
+    padding:10px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+}
+
+.startOver:hover {
+    background:#3074a4;
+    color:#fff;
 }
 
 .ui-button_route {

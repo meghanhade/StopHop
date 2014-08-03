@@ -29,6 +29,12 @@
     }
   }
 
+  function startOver(){
+    console.log("start over!!");
+    pathLayer.clearLayers();
+    map.removeLayer(markerList);
+  }
+
   function routeManager () {
     pathLayer.clearLayers();
     var roundTrip = $("#roundTrip input").is(":checked");
@@ -47,9 +53,9 @@
 
 
     markerDict[1]["delay"] = 0;
-    markerDict[2]["delay"] = 10;
-    markerDict[3]["delay"] = 10;
-    markerDict[4]["delay"] = 10;
+    markerDict[2]["delay"] = 5;
+    markerDict[3]["delay"] = 60;
+    markerDict[4]["delay"] = 120;
     // console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
     if (leaveNow === true) {
       inputTime = Date.now();
@@ -171,6 +177,7 @@
   $(document).ready(function () {
     $(".ui-button_route").click(routeManager);
     $(".ui-button_marker").click(addMarker);
+    $(".startOver").click(startOver);
     // $('.timepicker').timepicker();
     // $("#dateTime").val(new Date().toDateInputValue());​
     //$('.ui-button_route').click(get_routes);
