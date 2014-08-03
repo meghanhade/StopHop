@@ -85,7 +85,7 @@
     background: white;
 }
 
-/*.startOver {
+.startOver {
     background:#5CB9D5;
     color:#FFF;
     display:block;
@@ -99,7 +99,7 @@
     padding:10px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-}*/
+}
 
 .startOver:hover {
     background:#3074a4;
