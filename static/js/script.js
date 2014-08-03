@@ -42,8 +42,6 @@
     pathLayer = new L.LayerGroup().addTo(map);
   }
 
-  // amercan dollar, anything you synthesize
-
   function routeManager () {
     pathLayer.clearLayers();
     var roundTrip = $("#roundTrip input").is(":checked");
