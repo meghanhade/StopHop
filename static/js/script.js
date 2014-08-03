@@ -29,11 +29,27 @@
     }
   }
 
-  function startOver(){
-    console.log("start over!!");
-    pathLayer.clearLayers();
-    map.removeLayer(markerList);
-  }
+  // function addMarker() {
+  //   if (markerCount <= 4) {
+  //     var markerCountString = markerCount.toString();
+  //     var markerLayer;
+  //     var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+  //     icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': markerCountString}),
+  //     draggable: true
+  //     }).addTo(markerLayer);
+  //     markerDict[markerCount] = {"marker":newMarker};
+  //     markerCount += 1;
+  //     markerList.push(newMarker);
+  //   } else {
+  //     window.alert("Sorry, you've reached the maximum number of destinations (4).");
+  //   }
+  // }
+
+  // function startOver(){
+  //   console.log("start over!!");
+  //   pathLayer.clearLayers();
+  //   map.removeLayer(markerList);
+  // }
 
   function routeManager () {
     pathLayer.clearLayers();
@@ -47,10 +63,7 @@
     var delay4 = $("minuteDelay4").val();
 
 
-
     // CHANGE THESE DELAY INPUTS!
-
-
 
     markerDict[1]["delay"] = 0;
     markerDict[2]["delay"] = 5;
@@ -177,7 +190,7 @@
   $(document).ready(function () {
     $(".ui-button_route").click(routeManager);
     $(".ui-button_marker").click(addMarker);
-    $(".startOver").click(startOver);
+    // $(".startOver").click(startOver);
     // $('.timepicker').timepicker();
     // $("#dateTime").val(new Date().toDateInputValue());​
     //$('.ui-button_route').click(get_routes);
