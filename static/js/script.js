@@ -15,20 +15,6 @@
   var markerList = [];
   var markerDict = {};
 
-  // function addMarker() {
-  //   if (markerCount <= 4) {
-  //     var markerCountString = markerCount.toString();
-  //     var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
-  //     icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': markerCountString}),
-  //     draggable: true
-  //     }).addTo(map);
-  //     markerDict[markerCount] = {"marker":newMarker};
-  //     markerCount += 1;
-  //     markerList.push(newMarker);
-  //   } else {
-  //     window.alert("Sorry, you've reached the maximum number of destinations (4).");
-  //   }
-  // }
 
   function addMarker() {
     if (markerCount <= 4) {
@@ -47,8 +33,11 @@
 
   function startOver(){
     console.log("start over!!");
-    pathLayer.clearLayers();
     map.removeLayer(markerLayer);
+    markerCount = 1;
+    markerList = [];
+    markerDict = {};
+    markerLayer = new L.LayerGroup().addTo(map);
   }
 
   // amercan dollar, anything you synthesize
@@ -166,7 +155,6 @@
   }
 
   function findBestRoute(routes) {
-    // TODO actually find best route
     return routes.plan.itineraries[0];
   }
 
