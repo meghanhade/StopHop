@@ -10,17 +10,15 @@
 
   var pathLayer = new L.LayerGroup().addTo(map);
   var markerLayer = new L.LayerGroup().addTo(map);
-
   var markerCount = 1;
   var markerList = [];
   var markerDict = {};
-
 
   function addMarker() {
     if (markerCount <= 4) {
       var markerCountString = markerCount.toString();
       var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
-      icon: L.mapbox.marker.icon({'marker-color': 'CC0033', 'marker-symbol': markerCountString}),
+      icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString}),
       draggable: true
       }).addTo(markerLayer);
       markerDict[markerCount] = {"marker":newMarker};
@@ -60,16 +58,13 @@
     markerDict[2]["delay"] = 5;
     markerDict[3]["delay"] = 60;
     markerDict[4]["delay"] = 120;
-    // console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
+    console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
       inputTime = Date.now();
-      // console.log("leave now input time: ", inputTime);
     } else {
-       // var timeForm = $("input#dateTime").val();
        var origInputTime = $("input#dateTime").val();
        console.log("origInputTime: ",origInputTime);
-       // var adjustedTime = origInputTime.setHours(origInputTime.getHours() - 8);
        parsedInputTime = Date.parse(origInputTime);
        var adjustment = 8 * 60 * 60 * 1000;
        inputTime = parsedInputTime + adjustment;
@@ -90,12 +85,9 @@
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
       // TODO add spinner or force the UI/Page to draw
-      //can I make data fetching asynchronous and then sort out start/end times afterwards? (and space out at minimum by delay time)
       endTime = route.endTime;
       // update for next input time
       inputTime = endTime + delayTime;
-      // console.log("routeManager forloop endtime plus delaytime: ",i,":", inputTime);
-      // console.log([fromMarker, toMarker, inputTime, delayTime]);
     }
   }
 
@@ -128,7 +120,6 @@
     if (delayTime === undefined){
       delayTime = 0;
     }
-    // THIS COULD BE WHERE THE TIME FAILS
     var delay = parseInt(delayTime) * 60 * 1000;
     var delayedStart = delay + inputTime;
     var d = new Date(delayedStart);
@@ -162,6 +153,7 @@
       var endHour = endTime.getHours();
       var endMin = endTime.getMinutes();
       // draw the polyline
+      //add style to L.polyline(options(style (is an object w/ stroke color, weight)))
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
       route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);

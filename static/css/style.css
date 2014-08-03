@@ -11,7 +11,7 @@
     padding:5px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+    background:rgba(255,255,255,0.7);
 }
 #minuteDelay3 {
     display:block;
@@ -25,7 +25,7 @@
     padding:5px;
     border:px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+    background:rgba(255,255,255,0.7);
 }
 #minuteDelay4 {
     display:block;
@@ -39,7 +39,7 @@
     padding:5px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+    background:rgba(255,255,255,0.7);
 }
 
 #roundTrip {
@@ -53,7 +53,7 @@
     padding:5px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+    background:rgba(255,255,255,0.7);
 }
 #dateTime {
     display:block;
@@ -69,6 +69,7 @@
     padding:5px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
+    background:rgba(255,255,255,0.7);
 }
 
 #leaveNow {
@@ -82,11 +83,11 @@
     padding:5px;
     border:0px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    background: white;
+    background:rgba(255,255,255,0.7);
 }
 
 .startOver {
-    background:#5CB9D5;
+    background:rgba(92,185,213,0.75);
     color:#FFF;
     display:block;
     position:absolute;
@@ -102,12 +103,12 @@
 }
 
 .startOver:hover {
-    background:#4D9BB3;
+    background:rgba(92,185,213,0.9);
     color:#fff;
 }
 
 .ui-button_route {
-    background:#B830A8;
+    background:rgba(184,48,168,0.75);
     color:#FFF;
     display:block;
     position:absolute;
@@ -122,13 +123,15 @@
     border-radius:3px;
 }
 
+
+
 .ui-button_route:hover {
-    background:#9E2B91;
+    background:rgba(184,48,168,0.9);
     color:#fff;
 }
 
 .ui-button_marker {
-    background:#3887BE;
+    background:rgba(56,135,190,0.75);
     color:#FFF;
     display:block;
     position:absolute;
@@ -144,6 +147,6 @@
 }
 
 .ui-button_marker:hover {
-    background:#3074a4;
+    background:rgba(56,135,190,0.9);
     color:#fff;
 }
