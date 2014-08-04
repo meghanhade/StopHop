@@ -11,19 +11,17 @@
   var pathLayer = new L.LayerGroup().addTo(map);
   var markerLayer = new L.LayerGroup().addTo(map);
   var markerCount = 1;
-  var markerList = [];
   var markerDict = {};
 
   function addMarker() {
     if (markerCount <= 4) {
       var markerCountString = markerCount.toString();
-      var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
-      icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString}),
-      draggable: true
+        var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+        icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
+        draggable: true
       }).addTo(markerLayer);
       markerDict[markerCount] = {"marker":newMarker};
       markerCount += 1;
-      markerList.push(newMarker);
     } else {
       window.alert("Sorry, you've reached the maximum number of destinations (4).");
     }
@@ -34,7 +32,6 @@
     map.removeLayer(markerLayer);
     map.removeLayer(pathLayer);
     markerCount = 1;
-    markerList = [];
     markerDict = {};
     markerLayer = new L.LayerGroup().addTo(map);
     pathLayer = new L.LayerGroup().addTo(map);
@@ -45,19 +42,21 @@
     var roundTrip = $("#roundTrip input").is(":checked");
     var leaveNow = $("#leaveNow input").is(":checked");
     // var delay2 = 30; //form response
-    var delay2 = $("minuteDelay2").val();
+    // var delay2 = $("minuteDelay2").val();
+    var delay2 = $("#delayTime2").val();
+    console.log("delay 2 input: ", delay2);
     // var delay3 = 10;//form response
-    var delay3 = $("minuteDelay3").val();
+    var delay3 = $("#delayTime3").val();
     // var delay4 = 10; //form response
-    var delay4 = $("minuteDelay4").val();
+    var delay4 = $("#delayTime4").val();
 
 
     // CHANGE THESE DELAY INPUTS!
 
     markerDict[1]["delay"] = 0;
-    markerDict[2]["delay"] = 5;
-    markerDict[3]["delay"] = 60;
-    markerDict[4]["delay"] = 120;
+    markerDict[2]["delay"] = delay2;
+    markerDict[3]["delay"] = delay3;
+    markerDict[4]["delay"] = delay4;
     console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
@@ -145,6 +144,7 @@
     // console.log(route.legs[0].startTime);
 
     for(var i=0; i < legs.length; i++) {
+      console.log("drawing route number ", i);
       var leg = legs[i];
       var endTime = new Date(leg.endTime);
       var startTime = new Date(leg.startTime);
@@ -157,6 +157,7 @@
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
       route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      console.log("drew route ", i);
     }
   }
 
@@ -166,6 +167,5 @@
     $(".startOver").click(startOver);
     // $('.timepicker').timepicker();
     // $("#dateTime").val(new Date().toDateInputValue());​
-    //$('.ui-button_route').click(get_routes);
   });
 })();

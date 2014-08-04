@@ -129,8 +129,6 @@
     font-family: Menlo, Bitstream Vera Sans Mono, Monaco, Consolas, monospace;
 }
 
-
-
 .ui-button_route:hover {
     background:rgba(184,48,168,0.9);
     color:#fff;
