@@ -41,29 +41,29 @@
     pathLayer.clearLayers();
     var roundTrip = $("#roundTrip input").is(":checked");
     var leaveNow = $("#leaveNow input").is(":checked");
-    // var delay2 = 30; //form response
-    // var delay2 = $("minuteDelay2").val();
     var delay2 = $("#delayTime2").val();
-    console.log("delay 2 input: ", delay2);
-    // var delay3 = 10;//form response
     var delay3 = $("#delayTime3").val();
-    // var delay4 = 10; //form response
     var delay4 = $("#delayTime4").val();
 
-
-    // CHANGE THESE DELAY INPUTS!
-
     markerDict[1]["delay"] = 0;
-    markerDict[2]["delay"] = delay2;
-    markerDict[3]["delay"] = delay3;
-    markerDict[4]["delay"] = delay4;
+   
+    if (typeof (markerDict[2]) !== 'undefined'){
+      markerDict[2]["delay"] = delay2;
+    } else {
+      console.log("undefined check: ", markerDict[2]["delay"]);
+    }
+    if (typeof (markerDict[3]) !== 'undefined'){
+      markerDict[3]["delay"] = delay3;
+    }
+    if (typeof (markerDict[4]) !== 'undefined'){
+      markerDict[4]["delay"] = delay4;
+    }
     console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
       inputTime = Date.now();
     } else {
        var origInputTime = $("input#dateTime").val();
-       console.log("origInputTime: ",origInputTime);
        parsedInputTime = Date.parse(origInputTime);
        var adjustment = 8 * 60 * 60 * 1000;
        inputTime = parsedInputTime + adjustment;
@@ -72,9 +72,13 @@
     var dictLength = Object.keys(markerDict).length;
     
     if (roundTrip === true) {
-      markerDict[5]=markerDict[1];
+      // markerDict[Object.keys(markerDict)[Object.keys(markerDict).length - 1]]=markerDict[1];
+      console.log(dictLength);
+      console.log(markerDict[dictLength]);
+      markerDict[dictLength]=markerDict[1];
+
     } else {
-      delete markerDict[5];
+      delete markerDict[dictLength];
     }
     for (var i = 1; i < dictLength; i++) {
       var fromMarker = markerDict[i]["marker"];
