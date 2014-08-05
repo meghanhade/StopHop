@@ -47,6 +47,7 @@
     markerDict = {};
     markerLayer = new L.LayerGroup().addTo(map);
     pathLayer = new L.LayerGroup().addTo(map);
+    map.setView([45.52282, -122.6766], 13);
   }
 
   function routeManager () {
@@ -183,23 +184,23 @@
       var polyline_options;
       if (leg.mode === "WALK") {
         polyline_options = {
-        color: 'BLUE',
-        opacity: .7
+        color:'#39C9BB',
+        opacity: .8
         };
       } else if (leg.mode === "TRAM"){
         polyline_options = {
-        color: 'RED',
-        opacity: .7
+        color: '#9BCb68',
+        opacity: .8
         };
       } else if (leg.mode === "BUS"){
         polyline_options = {
-        color: 'GREEN',
-        opacity: .7
+        color: "#E87272",
+        opacity: .8
         };
       } else {
         polyline_options = {
-        color: 'BLACK',
-        opacity: .7
+        color: "BLUE",
+        // opacity: .7
         };
       }
       // draw the polyline
