@@ -217,10 +217,22 @@
     border: 1px solid;
 }
 
-#resultContainer
+#resultsContainer
 {
     display: none;
+    z-index: 100;
+    width:400px;
+    height:135px;
+    position: absolute;
+    left: 30px;
+    bottom: 345px;
 }
+
+#resultsContainer #accordian div
+{
+    height: 250px;
+    overflow: auto;
+} 
 
 .ui-button_marker.disabled{
     /*[type=submit]:disabled,

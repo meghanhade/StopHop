@@ -54,9 +54,9 @@
   }
 
   function startOver(){
-    // console.log("start over!!");
     map.removeLayer(markerLayer);
     map.removeLayer(pathLayer);
+    $( "#accordion" ).html("");
     $(".ui-button_marker").removeClass("disabled");
     markerCount = 1;
     markerDict = {};
@@ -87,9 +87,6 @@
     var delay4 = $("#delayTime4").val();
 
     var delays = {1:0, 2:delay2, 3:delay3, 4:delay4};
-    // console.log("delays: ", delays);
-
-    // console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
       inputTime = Date.now();
@@ -103,30 +100,21 @@
     var dictLength = Object.keys(markerDict).length;
     
     if (roundTrip === true) {
-      // console.log(markerDict[dictLength]);
-      // console.log('dict length in roundtrip', Object.keys(markerDict).length);
       markerDict[dictLength+1]=markerDict[1];
-      // console.log('dict length in roundtrip', Object.keys(markerDict).length);
       dictLength = Object.keys(markerDict).length;
     }
 
-    // console.log("markerDict: ", markerDict);
-    // console.log("dictLength: ",dictLength);
     for (var i = 1; i < dictLength; i++) {
       console.log("i: ", i);
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
       var delayTime;
-      // console.log("typeof delays: ", typeof (delays[i]));
       delayTime = 0;
       if (!delays[i]){
         delayTime = 0;
-        // console.log("delayTime/if: ", delayTime);
       } else {
         delayTime = parseInt(delays[i]);
-        // console.log("delayTime/else: ", delayTime);
       }
-      // console.log("fromMarker: ,", fromMarker, "toMarker: ", toMarker, "inputTime: ", inputTime, "delayTime: ", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
       showResults();
@@ -134,6 +122,8 @@
       // update for next input time
       inputTime = endTime + delayTime;
     }
+
+    $( "#accordion" ).accordion();
   }
 
   function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
@@ -147,7 +137,6 @@
     var routesData;
     //
     $.ajax({
-      //spinner here?
       url: url,
       dataType: 'json',
       async: false,
@@ -183,20 +172,16 @@
   }
 
   function findBestRoute(routes) {
-    // console.log("routes: ",routes);
     return routes.plan.itineraries[0];
   }
 
   function draw_route (route) {
     var legs = route.legs;
-    // var modeBus =;
-    // var modeWalk =;
-    // var modeRail =;
-    // var color2
-    // console.log(route.legs[0].startTime);
+    var h3,div,p;
 
     //manage removing loader class//
-
+    h3 = $("<h3 />").text("route");
+    div = $("<div />");
     for(var i=0; i < legs.length; i++) {
       var color;
       var leg = legs[i];
@@ -229,8 +214,16 @@
       // draw the polyline
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
       route_line.leg = leg;
-      route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From "+leg.from.name+"to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      
+      p = $("<p />").text(leg.mode+" "+(leg.hasOwnProperty('routeShortName') ? "("+leg.routeShortName+") "+leg.routeLongName+". F" : "f")+"rom "+leg.from.name+" to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      div.append(p);
+
     }
+
+    //accordion for directions to put in results div
+    $("#accordion").append(h3);
+    $("#accordion").append(div);
   }
 
   $(document).ready(function () {
