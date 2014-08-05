@@ -28,7 +28,6 @@
       markerCount += 1;
     } else {
       disableButton();
-      // window.alert("Sorry, you've reached the maximum number of destinations (4).");
     }
   }
 
@@ -36,6 +35,7 @@
     console.log("start over!!");
     map.removeLayer(markerLayer);
     map.removeLayer(pathLayer);
+    $(".ui-button_marker").removeClass("disabled");
     markerCount = 1;
     markerDict = {};
     markerLayer = new L.LayerGroup().addTo(map);
