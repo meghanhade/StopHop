@@ -13,6 +13,10 @@
   var markerCount = 1;
   var markerDict = {};
 
+  function disableButton() {
+    $(".ui-button_marker").addClass("disabled");
+  }
+
   function addMarker() {
     if (markerCount <= 4) {
       var markerCountString = markerCount.toString();
@@ -23,7 +27,8 @@
       markerDict[markerCount] = {"marker":newMarker};
       markerCount += 1;
     } else {
-      window.alert("Sorry, you've reached the maximum number of destinations (4).");
+      disableButton();
+      // window.alert("Sorry, you've reached the maximum number of destinations (4).");
     }
   }
 
@@ -38,6 +43,7 @@
   }
 
   function routeManager () {
+    //manage loader
     pathLayer.clearLayers();
     var roundTrip = $("#roundTrip input").is(":checked");
     var leaveNow = $("#leaveNow input").is(":checked");
@@ -103,8 +109,9 @@
   function getRoutes (fromMarker, toMarker, inputTime, delayTime) {
     var url = generate_url(fromMarker, toMarker, inputTime, delayTime);
     var routesData;
+    //
     $.ajax({
-      //spinner here? Cynthia thinks *maybe*
+      //spinner here?
       url: url,
       dataType: 'json',
       async: false,
@@ -146,10 +153,17 @@
 
   function draw_route (route) {
     var legs = route.legs;
+    // var modeBus =;
+    // var modeWalk =;
+    // var modeRail =;
+    //var color2
     // console.log(route.legs[0].startTime);
 
+    //manage removing loader class//
+
     for(var i=0; i < legs.length; i++) {
-      console.log("drawing route number ", i);
+      var color;
+      
       var leg = legs[i];
       var endTime = new Date(leg.endTime);
       var startTime = new Date(leg.startTime);
@@ -158,14 +172,18 @@
       if (startMin < 10) {
         startMin = ("0" + startTime.getMinutes()).slice(-2);
       }
-      //formatting method on getMinutes
       var endHour = endTime.getHours();
       var endMin = endTime.getMinutes();
+      // var polyline_options;
       // draw the polyline
       //add style to L.polyline(options(style (is an object w/ stroke color, weight)))
+      // if (leg.mode === "WALK") {
+      //   polyline_options = {
+      //   color: '#000'
+      //   };
+      // var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
-      // if (startMin is one digit, add zero to the beginning)
       route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
       console.log("drew route ", i);
     }

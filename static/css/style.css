@@ -90,6 +90,10 @@
     background:rgba(255,255,255,0.7);
 }
 
+.leaflet-bar:hover a {
+    background:rgba(255,255,255,0.9);
+}
+
 .startOver {
     background:rgba(92,185,213,0.75);
     color:#FFF;
@@ -135,7 +139,7 @@
 }
 
 .ui-button_marker {
-    background:rgba(56,135,190,0.75);
+    background:rgba(56,135,190,1);
     color:#FFF;
     display:block;
     position:absolute;
@@ -150,6 +154,26 @@
     border-radius:3px;
     font-family: Menlo, Bitstream Vera Sans Mono, Monaco, Consolas, monospace;
     font-size: 14px;
+   /* -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;*/
+}
+
+.ui-button_marker.disabled{
+    /*[type=submit]:disabled,
+    [type=button]:disabled {*/
+    background:rgba(56,135,190,0.5);
+    cursor:not-allowed;
+}
+
+.ui-button_marker.disabled:hover{
+    /*[type=submit]:disabled,
+    [type=button]:disabled {*/
+    background:rgba(0,0,0,0.5);
+    cursor:not-allowed;
 }
 
 .ui-button_marker:hover {
