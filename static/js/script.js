@@ -45,19 +45,9 @@
     var delay3 = $("#delayTime3").val();
     var delay4 = $("#delayTime4").val();
 
-    markerDict[1]["delay"] = 0;
-   
-    if (typeof (markerDict[2]) !== 'undefined'){
-      markerDict[2]["delay"] = delay2;
-    } else {
-      console.log("undefined check: ", markerDict[2]["delay"]);
-    }
-    if (typeof (markerDict[3]) !== 'undefined'){
-      markerDict[3]["delay"] = delay3;
-    }
-    if (typeof (markerDict[4]) !== 'undefined'){
-      markerDict[4]["delay"] = delay4;
-    }
+    var delays = {1:0, 2:delay2, 3:delay3, 4:delay4};
+    console.log("delays: ", delays);
+
     console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
@@ -73,18 +63,32 @@
     
     if (roundTrip === true) {
       // markerDict[Object.keys(markerDict)[Object.keys(markerDict).length - 1]]=markerDict[1];
-      console.log(dictLength);
       console.log(markerDict[dictLength]);
-      markerDict[dictLength]=markerDict[1];
-
-    } else {
-      delete markerDict[dictLength];
+      console.log('dict length in roundtrip', Object.keys(markerDict).length);
+      markerDict[dictLength+1]=markerDict[1];
+      console.log('dict length in roundtrip', Object.keys(markerDict).length);
+      dictLength = Object.keys(markerDict).length;
+    // else {
+      // delete markerDict[dictLength];
     }
+
+    console.log("markerDict: ", markerDict);
+    console.log("dictLength: ",dictLength);
     for (var i = 1; i < dictLength; i++) {
+      console.log("i: ", i);
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
-      var delayTime = markerDict[i]["delay"];
-      // console.log("routeManager forloop delaytime: ",i,":", delayTime);
+      var delayTime;
+      console.log("typeof delays: ", typeof (delays[i]));
+      delayTime = 0;
+      if (!delays[i]){
+        delayTime = 0;
+        console.log("delayTime/if: ", delayTime);
+      } else {
+        delayTime = parseInt(delays[i]);
+        console.log("delayTime/else: ", delayTime);
+      }
+      // console.log("fromMarker: ,", fromMarker, "toMarker: ", toMarker, "inputTime: ", inputTime, "delayTime: ", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
       // TODO add spinner or force the UI/Page to draw
@@ -140,6 +144,7 @@
   }
 
   function findBestRoute(routes) {
+    console.log("routes: ",routes);
     return routes.plan.itineraries[0];
   }
 
