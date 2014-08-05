@@ -17,8 +17,22 @@
     $(".ui-button_marker").addClass("disabled");
   }
 
+  // function addMarker() {
+  //   if (markerCount <= 4) {
+  //     var markerCountString = markerCount.toString();
+  //       var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+  //       icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
+  //       draggable: true
+  //     }).addTo(markerLayer);
+  //     markerDict[markerCount] = {"marker":newMarker};
+  //     markerCount += 1;
+  //   } else {
+  //     disableButton();
+  //   }
+  // }
+
   function addMarker() {
-    if (markerCount <= 4) {
+    if (markerCount <= 3) {
       var markerCountString = markerCount.toString();
         var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
         icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
@@ -26,7 +40,14 @@
       }).addTo(markerLayer);
       markerDict[markerCount] = {"marker":newMarker};
       markerCount += 1;
-    } else {
+    } else if (markerCount = 4) {
+      var markerCountString = markerCount.toString();
+        var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+        icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
+        draggable: true
+      }).addTo(markerLayer);
+      markerDict[markerCount] = {"marker":newMarker};
+      markerCount += 1;
       disableButton();
     }
   }
