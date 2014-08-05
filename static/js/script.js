@@ -39,7 +39,7 @@
   }
 
   function startOver(){
-    console.log("start over!!");
+    // console.log("start over!!");
     map.removeLayer(markerLayer);
     map.removeLayer(pathLayer);
     $(".ui-button_marker").removeClass("disabled");
@@ -59,9 +59,9 @@
     var delay4 = $("#delayTime4").val();
 
     var delays = {1:0, 2:delay2, 3:delay3, 4:delay4};
-    console.log("delays: ", delays);
+    // console.log("delays: ", delays);
 
-    console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
+    // console.log("delay2: ", delay2, "delay3: ", delay3, "delay4: ", delay4);
 
     if (leaveNow === true) {
       inputTime = Date.now();
@@ -75,28 +75,28 @@
     var dictLength = Object.keys(markerDict).length;
     
     if (roundTrip === true) {
-      console.log(markerDict[dictLength]);
-      console.log('dict length in roundtrip', Object.keys(markerDict).length);
+      // console.log(markerDict[dictLength]);
+      // console.log('dict length in roundtrip', Object.keys(markerDict).length);
       markerDict[dictLength+1]=markerDict[1];
-      console.log('dict length in roundtrip', Object.keys(markerDict).length);
+      // console.log('dict length in roundtrip', Object.keys(markerDict).length);
       dictLength = Object.keys(markerDict).length;
     }
 
-    console.log("markerDict: ", markerDict);
-    console.log("dictLength: ",dictLength);
+    // console.log("markerDict: ", markerDict);
+    // console.log("dictLength: ",dictLength);
     for (var i = 1; i < dictLength; i++) {
       console.log("i: ", i);
       var fromMarker = markerDict[i]["marker"];
       var toMarker = markerDict[i + 1]["marker"];
       var delayTime;
-      console.log("typeof delays: ", typeof (delays[i]));
+      // console.log("typeof delays: ", typeof (delays[i]));
       delayTime = 0;
       if (!delays[i]){
         delayTime = 0;
-        console.log("delayTime/if: ", delayTime);
+        // console.log("delayTime/if: ", delayTime);
       } else {
         delayTime = parseInt(delays[i]);
-        console.log("delayTime/else: ", delayTime);
+        // console.log("delayTime/else: ", delayTime);
       }
       // console.log("fromMarker: ,", fromMarker, "toMarker: ", toMarker, "inputTime: ", inputTime, "delayTime: ", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
@@ -154,7 +154,7 @@
   }
 
   function findBestRoute(routes) {
-    console.log("routes: ",routes);
+    // console.log("routes: ",routes);
     return routes.plan.itineraries[0];
   }
 
@@ -164,7 +164,7 @@
     // var modeWalk =;
     // var modeRail =;
     // var color2
-    console.log(route.legs[0].startTime);
+    // console.log(route.legs[0].startTime);
 
     //manage removing loader class//
 
@@ -183,11 +183,23 @@
       var polyline_options;
       if (leg.mode === "WALK") {
         polyline_options = {
-        color: 'RED'
+        color: 'BLUE',
+        opacity: .7
+        };
+      } else if (leg.mode === "TRAM"){
+        polyline_options = {
+        color: 'RED',
+        opacity: .7
+        };
+      } else if (leg.mode === "BUS"){
+        polyline_options = {
+        color: 'GREEN',
+        opacity: .7
         };
       } else {
         polyline_options = {
-        color: 'BLACK'
+        color: 'BLACK',
+        opacity: .7
         };
       }
       // draw the polyline
@@ -196,7 +208,7 @@
       // var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
       route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
-      console.log("drew route ", i);
+      // console.log("drew route ", i);
     }
   }
 
