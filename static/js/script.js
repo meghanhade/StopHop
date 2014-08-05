@@ -62,14 +62,11 @@
     var dictLength = Object.keys(markerDict).length;
     
     if (roundTrip === true) {
-      // markerDict[Object.keys(markerDict)[Object.keys(markerDict).length - 1]]=markerDict[1];
       console.log(markerDict[dictLength]);
       console.log('dict length in roundtrip', Object.keys(markerDict).length);
       markerDict[dictLength+1]=markerDict[1];
       console.log('dict length in roundtrip', Object.keys(markerDict).length);
       dictLength = Object.keys(markerDict).length;
-    // else {
-      // delete markerDict[dictLength];
     }
 
     console.log("markerDict: ", markerDict);
@@ -91,7 +88,6 @@
       // console.log("fromMarker: ,", fromMarker, "toMarker: ", toMarker, "inputTime: ", inputTime, "delayTime: ", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
-      // TODO add spinner or force the UI/Page to draw
       endTime = route.endTime;
       // update for next input time
       inputTime = endTime + delayTime;
@@ -159,12 +155,17 @@
       var startTime = new Date(leg.startTime);
       var startHour = startTime.getHours();
       var startMin = startTime.getMinutes();
+      if (startMin < 10) {
+        startMin = ("0" + startTime.getMinutes()).slice(-2);
+      }
+      //formatting method on getMinutes
       var endHour = endTime.getHours();
       var endMin = endTime.getMinutes();
       // draw the polyline
       //add style to L.polyline(options(style (is an object w/ stroke color, weight)))
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
+      // if (startMin is one digit, add zero to the beginning)
       route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
       console.log("drew route ", i);
     }
