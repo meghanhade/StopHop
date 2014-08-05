@@ -36,6 +36,21 @@
       markerCount += 1;
       disableButton();
     }
+
+    addTimeDelay();
+  }
+
+  function addTimeDelay() {
+    $("#timeDelayContainer").html('');
+    var timeDelayForm,id;
+    var roundTrip = $("#roundTrip input").is(":checked");
+    for (var i = 3; i < markerCount + (roundTrip === true ? 1 : 0); i++)
+    {
+      id = i - 1;
+      timeDelayForm = $("<div />").addClass("timeDelay").attr("id","minuteDelay"+id);
+      timeDelayForm.html('Time needed at stop #'+id+': <input id="delayTime'+id+'" type="number" name="quantity" placeholder="Minutes" min="0">');
+      $("#timeDelayContainer").append(timeDelayForm);
+    }
   }
 
   function startOver(){
@@ -48,9 +63,21 @@
     markerLayer = new L.LayerGroup().addTo(map);
     pathLayer = new L.LayerGroup().addTo(map);
     map.setView([45.52282, -122.6766], 13);
+    showInput();
+    addTimeDelay();
   }
 
-  function routeManager () {
+  function showResults() {
+    $("#inputContainer").hide();
+    $("#resultsContainer").show();
+  }
+
+  function showInput() {
+    $("#inputContainer").show();
+    $("#resultsContainer").hide();
+  }
+
+  function routeManager() {
     //manage loader
     pathLayer.clearLayers();
     var roundTrip = $("#roundTrip input").is(":checked");
@@ -102,6 +129,7 @@
       // console.log("fromMarker: ,", fromMarker, "toMarker: ", toMarker, "inputTime: ", inputTime, "delayTime: ", delayTime);
       route = findTheRoute(fromMarker, toMarker, inputTime, delayTime);
       draw_route(route);
+      showResults();
       endTime = route.endTime;
       // update for next input time
       inputTime = endTime + delayTime;
@@ -197,19 +225,11 @@
         color: "#E87272",
         opacity: .8
         };
-      } else {
-        polyline_options = {
-        color: "BLUE",
-        // opacity: .7
-        };
       }
       // draw the polyline
-      
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
-      // var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
       route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
-      // console.log("drew route ", i);
     }
   }
 
@@ -219,5 +239,6 @@
     $(".startOver").click(startOver);
     // $('.timepicker').timepicker();
     // $("#dateTime").val(new Date().toDateInputValue());​
+    $('#roundTrip input[type=checkbox]').click(addTimeDelay);
   });
 })();

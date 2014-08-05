@@ -12,31 +12,28 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
   </head>
   <body>  
-    <input id='dateTime' type=datetime-local>
-    <div id="leaveNow">
-      <input type="checkbox" name="leaveNow">Leave now
-    </div> 
+     
     <div id='map'></div>
-    <a class='ui-button_marker'>ADD DESTINATION</a>
-    <a class='ui-button_route'>FIND ROUTE</a>
     <a class='startOver'>START OVER</a>
-
     <div id="logo"><img src="../static/img/StopHop.png"></div>
-        
-    <div id="minuteDelay2">
-      Time needed at stop #2: <input id="delayTime2" type="number" name="quantity" placeholder="Minutes" min="0">
-    </div>
-    <div id="minuteDelay3">
-      Time needed at stop #3: <input id="delayTime3" type="number" name="quantity" placeholder="Minutes" min="0">
-    </div>
-    <div id="minuteDelay4">
-      Time needed at stop #4: <input id="delayTime4" type="number" name="quantity" placeholder="Minutes" min="0">
+    
+    <div id="inputContainer">
+      <a class='ui-button_marker'>ADD DESTINATION</a>
+      <a class='ui-button_route'>FIND ROUTE</a>
+      <div id="timeDelayContainer"></div>
+      <div id="roundTrip">
+        <input type="checkbox" name="roundTrip">Roundtrip
+      </div>
+      <div id="leaveNow">
+        <input type="checkbox" name="leaveNow">Leave now
+      </div> 
+      <input id='dateTime' type=datetime-local>
     </div>
 
-    <div id="roundTrip">
-      <input type="checkbox" name="roundTrip">Roundtrip
-    </div>  
-
+    <div id="resultsContainer">
+      test
+    </div>
+   
     <script type='text/javascript' src="../static/js/script.js"></script>
 
   </body>
