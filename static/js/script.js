@@ -17,20 +17,6 @@
     $(".ui-button_marker").addClass("disabled");
   }
 
-  // function addMarker() {
-  //   if (markerCount <= 4) {
-  //     var markerCountString = markerCount.toString();
-  //       var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
-  //       icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
-  //       draggable: true
-  //     }).addTo(markerLayer);
-  //     markerDict[markerCount] = {"marker":newMarker};
-  //     markerCount += 1;
-  //   } else {
-  //     disableButton();
-  //   }
-  // }
-
   function addMarker() {
     if (markerCount <= 3) {
       var markerCountString = markerCount.toString();
@@ -40,9 +26,9 @@
       }).addTo(markerLayer);
       markerDict[markerCount] = {"marker":newMarker};
       markerCount += 1;
-    } else if (markerCount = 4) {
+    } else if (markerCount == 4) {
       var markerCountString = markerCount.toString();
-        var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
+      var newMarker = L.marker(new L.LatLng(45.515609, -122.682437), {
         icon: L.mapbox.marker.icon({'marker-color': 'B830A8', 'marker-symbol': markerCountString,}),
         draggable: true
       }).addTo(markerLayer);
@@ -177,14 +163,13 @@
     // var modeBus =;
     // var modeWalk =;
     // var modeRail =;
-    //var color2
-    // console.log(route.legs[0].startTime);
+    // var color2
+    console.log(route.legs[0].startTime);
 
     //manage removing loader class//
 
     for(var i=0; i < legs.length; i++) {
       var color;
-      
       var leg = legs[i];
       var endTime = new Date(leg.endTime);
       var startTime = new Date(leg.startTime);
@@ -195,17 +180,22 @@
       }
       var endHour = endTime.getHours();
       var endMin = endTime.getMinutes();
-      // var polyline_options;
+      var polyline_options;
+      if (leg.mode === "WALK") {
+        polyline_options = {
+        color: 'RED'
+        };
+      } else {
+        polyline_options = {
+        color: 'BLACK'
+        };
+      }
       // draw the polyline
-      //add style to L.polyline(options(style (is an object w/ stroke color, weight)))
-      // if (leg.mode === "WALK") {
-      //   polyline_options = {
-      //   color: '#000'
-      //   };
-      // var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
-      var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
+      
+      var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
+      // var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points)).addTo(pathLayer);
       route_line.leg = leg;
-      route_line.bindPopup("Mode: "+leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From: "+leg.from.name+". To: "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
       console.log("drew route ", i);
     }
   }
