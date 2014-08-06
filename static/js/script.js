@@ -229,9 +229,9 @@
       // draw the polyline
       var route_line = new L.Polyline(polyline.decode(leg.legGeometry.points), polyline_options).addTo(pathLayer);
       route_line.leg = leg;
-      route_line.bindPopup(leg.mode+" ("+leg.routeShortName+") "+leg.routeLongName+". From "+leg.from.name+"to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      route_line.bindPopup(leg.mode+" from "+leg.from.name+" to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin+".");
       
-      p = $("<p />").text(leg.mode+" "+(leg.hasOwnProperty('routeShortName') ? "("+leg.routeShortName+") "+leg.routeLongName+". F" : "f")+"rom "+leg.from.name+" to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
+      p = $("<p />").text(leg.mode+" "+(leg.hasOwnProperty('routeShortName') ? "("+leg.routeShortName+") "+leg.routeLongName+" f" : "f")+"rom "+leg.from.name+" to "+leg.to.name+". Depart at: "+startHour+":"+startMin+". Arrive by: "+endHour+":"+endMin);
       div.append(p);
 
     }

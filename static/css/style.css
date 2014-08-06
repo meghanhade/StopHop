@@ -93,6 +93,19 @@
     width:100%;
 }
 
+#key {
+  position: absolute;
+  z-index:100;
+  bottom:30px;
+  right:20px;
+  width:250px;
+}
+
+#key img
+{
+    width:100%;
+}
+
 .leaflet-bar a {
     background:rgba(255,255,255,0.7);
 }
@@ -102,7 +115,7 @@
 }
 
 .startOver {
-    background:rgba(92,185,213,0.75);
+    background:rgba(92,185,213,0.85);
     color:#FFF;
     display:block;
     position:absolute;
@@ -120,12 +133,12 @@
 }
 
 .startOver:hover {
-    background:rgba(92,185,213,0.9);
+    background:rgba(92,185,213,1);
     color:#fff;
 }
 
 .ui-button_route {
-    background:rgba(184,48,168,0.9);
+    background:rgba(184,48,168,0.85);
     color:#FFF;
     display:block;
     position:absolute;
@@ -162,7 +175,7 @@
 }*/
 
 .ui-button_route:hover {
-    background:rgba(184,48,168,0.9);
+    background:rgba(184,48,168,1);
     color:#fff;
 }
 
@@ -235,7 +248,7 @@
 }
 
 .ui-button_marker:hover {
-    background:rgba(56,135,190,0.9);
+    background:rgba(56,135,190,1);
     color:#fff;
 }
 
