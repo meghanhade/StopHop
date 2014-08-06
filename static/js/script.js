@@ -127,7 +127,7 @@
     $( "#accordion" ).accordion({
       "collapsible": true,
       "heightStyle": "fill",
-      "autoHeight": false
+      "autoHeight": false,
     });
     $( "#accordion" ).accordion("refresh");
   }
@@ -213,17 +213,17 @@
       if (leg.mode === "WALK") {
         polyline_options = {
         color:'#39C9BB',
-        opacity: .8
+        opacity: 1
         };
       } else if (leg.mode === "TRAM"){
         polyline_options = {
         color: '#9BCb68',
-        opacity: .8
+        opacity: 1
         };
       } else if (leg.mode === "BUS"){
         polyline_options = {
         color: "#E87272",
-        opacity: .8
+        opacity: 1
         };
       }
       // draw the polyline
