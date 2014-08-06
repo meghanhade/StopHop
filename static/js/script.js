@@ -6,7 +6,7 @@
     sanitizer: function (x) { console.log(x); return x; }
     }
     })
-    .setView([45.52282, -122.6766], 13);
+    .setView([45.52282, -122.6766], 14);
 
   var pathLayer = new L.LayerGroup().addTo(map);
   var markerLayer = new L.LayerGroup().addTo(map);
@@ -56,7 +56,8 @@
   function startOver(){
     map.removeLayer(markerLayer);
     map.removeLayer(pathLayer);
-    $( "#accordion" ).html("");
+    $("#accordion").empty();
+
     $(".ui-button_marker").removeClass("disabled");
     markerCount = 1;
     markerDict = {};
@@ -123,7 +124,11 @@
       inputTime = endTime + delayTime;
     }
 
-    $( "#accordion" ).accordion();
+    $( "#accordion" ).accordion({
+      collapsible: true,
+      heightStyle: "content"
+    });
+    $( "#accordion" ).accordion("refresh");
   }
 
   function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
@@ -180,7 +185,7 @@
     var h3,div,p;
 
     //manage removing loader class//
-    h3 = $("<h3 />").text("route");
+    h3 = $("<h3 />").text("Route");
     div = $("<div />");
     for(var i=0; i < legs.length; i++) {
       var color;
