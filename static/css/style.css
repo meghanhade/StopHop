@@ -219,16 +219,21 @@
     display: none;
     z-index: 100;
     width:250px;
-    height:135px;
+    height:335px;
     position: absolute;
     left: 30px;
-    bottom: 345px;
+    top: 115px;
+}
+
+#accordian
+{
+    height: 200px;
 }
 
 #resultsContainer #accordian div {
-    height: 250px;
     overflow: auto;
     border: none;
+    height: 200px !important;
 } 
 
 .ui-button_marker.disabled{

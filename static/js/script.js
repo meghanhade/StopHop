@@ -125,15 +125,25 @@
     }
 
     $( "#accordion" ).accordion({
-      collapsible: true,
-      heightStyle: "content"
+      "collapsible": true,
+      "heightStyle": "fill",
+      "autoHeight": false
     });
     $( "#accordion" ).accordion("refresh");
   }
 
+  /*
+  * findTheRoute I'm a description!
+  * @param fromMarker Object Starting point
+  * @param toMaker Object Ending point
+  * @param inputTime Date ...
+  * @param delayTime Date ...
+  *
+  * @return route ... ...
+  */
   function findTheRoute (fromMarker, toMarker, inputTime, delayTime) {
     routes = getRoutes(fromMarker, toMarker, inputTime, delayTime);
-    route = findBestRoute(routes);
+    route = findBestRoute(routes); //returns object
     return route;
   }
 
