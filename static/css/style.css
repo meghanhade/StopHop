@@ -41,9 +41,9 @@
     left:30px;
     width: 225px;
     z-index:100;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 18px;
     padding:5px;
     border:none;
     /*background-color: white;*/
@@ -72,9 +72,9 @@
     left:30px;
     width: 225px;
     z-index:100;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 18px;
     padding:5px;
     border:none;
     background:rgba(255,255,255,0.9);
@@ -127,8 +127,9 @@
     text-align:center;
     padding:5px;
     border:none;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: 300;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -142,7 +143,7 @@
     color:#FFF;
     display:block;
     position:absolute;
-    bottom:75px;
+    bottom:65px;
     left:30px;
     width:225px;
     height: 20px;
