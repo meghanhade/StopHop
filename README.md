@@ -13,12 +13,12 @@ This project was inspired by my interest in creating web tools that improve urba
 
 Dependencies
 ------------
-JavaScript 
-jQuery 
-[Leaflet](http://leafletjs.com/), an Open-Source JavaScript Library for Interactive Maps
-[Mapbox](https://www.mapbox.com/)
-[OpenTripPlanner Routing Engine](https://github.com/opentripplanner)
-HTML/CSS 
+JavaScript<br/>
+jQuery<br/> 
+[Leaflet](http://leafletjs.com/), an Open-Source JavaScript Library for Interactive Maps<br/>
+[Mapbox](https://www.mapbox.com/)<br/>
+[OpenTripPlanner Routing Engine](https://github.com/opentripplanner)<br/>
+HTML/CSS<br/> 
 
 This project requires implementation of the OpenTripPlanner (OTP) routing engine. This routing engine has various dependencies of its own; information about these can be found in the OTP documentation.
 
