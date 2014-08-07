@@ -1,4 +1,4 @@
-StopHop ![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png=200x100)
+StopHop ![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png =200x100)
 =================
 
 Overview
