@@ -10,8 +10,7 @@ Powered by several open source technologies, this project fills a gap left by Go
 
 This project was inspired by my interest in creating web tools that improve urban systems, as well as open source technologies and creating dynamic, data-driven maps and visualizations.
 
-[!StopHop results screen capture](https://github.com/meghanhade/StopHop/blob/master/static/img/Screenshot.png}
-
+[!StopHop results screen capture](https://github.com/meghanhade/StopHop/blob/master/static/img/Screenshot.png)
 
 Dependencies
 ------------
