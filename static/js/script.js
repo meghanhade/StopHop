@@ -209,6 +209,9 @@
       }
       var endHour = endTime.getHours();
       var endMin = endTime.getMinutes();
+      if (endMin < 10) {
+        endMin = ("0" + endTime.getMinutes()).slice(-2);
+      }
       var polyline_options;
       if (leg.mode === "WALK") {
         polyline_options = {
