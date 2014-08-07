@@ -1,7 +1,7 @@
 StopHop
 =================
 
-![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.jpg)
+![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo.jpg)
 
 Overview
 -----------
