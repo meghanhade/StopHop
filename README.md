@@ -1,7 +1,7 @@
 StopHop
 =================
 
-<img src="https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png" alt="StopHop" style="width:100">
+<img src="https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png" alt="StopHop" style="width:100px">
 
 Overview
 -----------
