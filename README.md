@@ -1,5 +1,7 @@
-StopHop ![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png =100x)
+StopHop
 =================
+
+<img src="https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png" alt="StopHop" style="width:100">
 
 Overview
 -----------
