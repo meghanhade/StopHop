@@ -1,10 +1,11 @@
 StopHop
 =================
 
-<img src="https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.png" alt="StopHop" style="width:200;height=100">
+![StopHop](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/StopHop_logo-01.jpg)
 
 Overview
 -----------
+
 
 StopHop is a web application that provides travel planning for public transit, allowing multiple stops and taking into consideration the amount of time needed at each destination. 
 
