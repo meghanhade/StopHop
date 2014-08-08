@@ -10,6 +10,8 @@ Powered by several open source technologies, this project fills a gap left by Go
 
 This project was inspired by my interest in creating web tools that improve urban systems, as well as open source technologies and creating dynamic, data-driven maps and visualizations.
 
+This project will be a work in progress for the next few weeks, as additional features are built out. I plan on building the graph for San Francisco, and adding the feature to have the stop order sorted based on an efficient route.
+
 ![StopHop results screen capture](https://raw.githubusercontent.com/meghanhade/StopHop/master/static/img/Screenshot.png)
 
 Dependencies
